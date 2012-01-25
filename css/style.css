@@ -2,6 +2,9 @@
  * ==|== normalize ==========================================================
  */
 
+@import url('http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css');
+@import url('yata.css');
+
 article, aside, details, figcaption, figure, footer, header, hgroup, nav, section { display: block; }
 audio, canvas, video { display: inline-block; *display: inline; *zoom: 1; }
 audio:not([controls]) { display: none; }
