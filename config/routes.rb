@@ -1,4 +1,9 @@
 Yata::Application.routes.draw do
+  root :to => "todos#index"
+
+  match "/auth/:provider/callback" => "sessions#create"
+  match "/signout" => "sessions#destroy"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
