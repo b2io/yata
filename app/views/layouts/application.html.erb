@@ -5,14 +5,22 @@
       <%= stylesheet_link_tag "application", :media => "all" %>
       <%= javascript_include_tag "application" %>
       <%= csrf_meta_tags %>
+      <%= yield(:head) %>
     </head>
     <body>
-        <% if current_user %>
-            Welcome <%= current_user.name %>!
-            <%= link_to "Sign Out", signout_path %>
-        <% else %>
-            <%= link_to "Sign in with Twitter", "/auth/twitter" %>
-        <% end %>
+        <div class="topbar">
+          <div class="topbar-inner">
+            <div class="container">
+              <% if current_user %>
+                  Welcome <%= current_user.name %>!
+                  <a class="brand" href="<%= signout_path %>">Sign Out</a>
+              <% else %>
+                  <a class="brand" href="<%= "/auth/twitter" %>">Sign in with Twitter</a>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
         <%= yield %>
     </body>
 </html>
