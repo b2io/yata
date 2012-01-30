@@ -1,26 +1,20 @@
 <!DOCTYPE html>
 <html>
-    <head>
-      <title><%= yield(:title) || "YATA" %></title>
-      <%= stylesheet_link_tag "application", :media => "all" %>
-      <%= javascript_include_tag "application" %>
-      <%= csrf_meta_tags %>
-      <%= yield(:head) %>
-    </head>
-    <body>
-        <div class="topbar">
-          <div class="topbar-inner">
-            <div class="container">
-              <% if current_user %>
-                  Welcome <%= current_user.name %>!
-                  <a class="brand" href="<%= signout_path %>">Sign Out</a>
-              <% else %>
-                  <a class="brand" href="<%= "/auth/twitter" %>">Sign in with Twitter</a>
-              <% end %>
-            </div>
-          </div>
-        </div>
-
-        <%= yield %>
-    </body>
+<head>
+  <title><%= full_title(yield(:title)) %></title>
+  <%= render "layouts/stylesheets" %>
+  <%= javascript_include_tag "application" %>
+  <%= render "layouts/icons" %>
+  <%= csrf_meta_tags %>
+  <%= yield(:head) %>
+</head>
+<body>
+<%= render "layouts/header" %>
+<div class="container">
+  <div class="content">
+    <%= yield %>
+  </div>
+  <%= render "layouts/footer" %>
+</div>
+</body>
 </html>
