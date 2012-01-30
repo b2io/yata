@@ -1,2 +1,2 @@
 # YATA
-## Yet Another TODO Application
+Yet Another TODO Application
