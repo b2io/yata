@@ -15,4 +15,5 @@
 //= require underscore
 //= require backbone
 //= require json2
+//= require bootstrap-alerts
 //= require_tree .

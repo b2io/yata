@@ -4,9 +4,7 @@
       <%= link_to "YATA", root_path, class: "brand" %>
       <div class="auth pull-right">
         <% if current_user %>
-            <%= link_to "Sign out", "/signout", class: "btn danger" %>
-        <% else %>
-            <%= link_to "Sign in", "/auth/twitter", class: "btn primary" %>
+            <%= link_to "Sign out", "/logout", class: "btn danger" %>
         <% end %>
       </div>
     </div>

@@ -1,9 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  helper_method :current_user
-
-  protected
+  private
 
   def authorize
     unless current_user
@@ -16,4 +14,6 @@ class ApplicationController < ActionController::Base
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
+
+  helper_method :current_user
 end

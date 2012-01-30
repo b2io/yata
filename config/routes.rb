@@ -1,8 +1,11 @@
 Yata::Application.routes.draw do
+
   resources :todos
 
-  root to: "home#index"
+  root to: "sessions#new"
 
   match "/auth/:provider/callback" => "sessions#create"
-  match "/signout" => "sessions#destroy"
+  match "/auth/failure" => "sessions#failure"
+  match "/logout" => "sessions#destroy", as: "logout"
+
 end

@@ -13,8 +13,6 @@
  *= require_tree .
 */
 
-/* Override some defaults */
-
 html, body {
   background-color: #eee;
 }
@@ -41,14 +39,4 @@ body {
     -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
     box-shadow: 0 1px 2px rgba(0,0,0,.15);
-}
-
-.page-header {
-    background-color: #f5f5f5;
-    padding: 20px 20px 10px;
-    margin: -20px -20px 20px;
-}
-
-.topbar .auth a {
-  margin: 5px 0 5px 10px;
 }
