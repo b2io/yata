@@ -1,8 +1,10 @@
 class TodosController < ApplicationController
+  before_filter :authorize
+
   # GET /todos
   # GET /todos.json
   def index
-    @todos = Todo.find_by_user_id(session[:user_id])
+    @todos = Todo.find_all_by_user_id(current_user.id)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -25,6 +27,7 @@ class TodosController < ApplicationController
   # GET /todos/new.json
   def new
     @todo = Todo.new
+    @todo.user_id = current_user.id
 
     respond_to do |format|
       format.html # new.html.erb
@@ -41,6 +44,7 @@ class TodosController < ApplicationController
   # POST /todos.json
   def create
     @todo = Todo.new(params[:todo])
+    @todo.user_id = current_user.id
 
     respond_to do |format|
       if @todo.save
