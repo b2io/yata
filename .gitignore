@@ -5,3 +5,6 @@
 /.idea
 /.vagrant
 /bin
+/help
+/Gemfile.lock
+/Gemfile.personal
