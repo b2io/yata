@@ -23,3 +23,7 @@ group :assets do
   gem 'coffee-rails'
   gem 'uglifier'
 end
+
+eval File.read(File.expand_path("Gemfile.personal")) if File.exists?(File.expand_path("Gemfile.personal"))
+
+
