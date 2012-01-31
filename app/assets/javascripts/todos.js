@@ -8,7 +8,7 @@ $(function(){
 	        <label class="add-on">\
 	            <input type="checkbox" class="todo-check" <% if (done) { %> checked <% } %> />\
 	        </label>\
-	        <input type="text" class="xlarge todo-input" size="16" />\
+	        <input type="text" class="todo-input" size="16" />\
 	        <button class="todo-destroy btn danger">Delete</button>\
 	    </div>\
 	';
@@ -16,7 +16,7 @@ $(function(){
     app.templates.stats = '\
 	    <%= done %> completed tasks.\
 	    <%= remaining %> remaining tasks.\
-	    <% if (done > 0) { %><button class="todo-clear btn danger">Clear Completed</button><% } %>\
+	    <% if (done > 0) { %><button class="todo-clear btn">Clear Completed</button><% } %>\
 	';
 
     // MODELS
