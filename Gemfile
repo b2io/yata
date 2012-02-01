@@ -8,6 +8,7 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-github'
 gem 'jquery-rails'
 gem 'rails-backbone'
+gem 'spork', '0.9.0.rc8'
 
 group :development do
   gem 'rspec-rails', '2.6.1'
@@ -29,6 +30,7 @@ group :assets do
   gem 'coffee-rails'
   gem 'uglifier'
 end
+
 
 eval File.read(File.expand_path("Gemfile.personal")) if File.exists?(File.expand_path("Gemfile.personal"))
 
