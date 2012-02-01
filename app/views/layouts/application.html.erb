@@ -3,7 +3,7 @@
 <head>
   <title><%= full_title(yield(:title)) %></title>
   <%= render "layouts/stylesheets" %>
-  <%= javascript_include_tag "application" %>
+  <%= render "layouts/scripts" %>
   <%= render "layouts/icons" %>
   <%= csrf_meta_tags %>
   <%= yield(:head) %>
