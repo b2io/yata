@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails'
+gem 'rails', '3.2.1'
 gem 'omniauth'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
@@ -11,12 +11,12 @@ gem 'rails-backbone'
 gem 'spork', '0.9.0.rc8'
 
 group :development do
-  gem 'rspec-rails', '2.6.1'
-  gem 'sqlite3'
+  gem 'rspec-rails', '2.8.1'
+  gem 'sqlite3', '1.3.5'
 end
 
 group :test do
-  gem 'rspec-rails', '2.6.1'
+  gem 'capybara', '1.1.2'
   gem 'webrat', '0.7.1'	
 end
 
@@ -26,9 +26,9 @@ group :production do
 end
 
 group :assets do
-  gem 'sass-rails'
-  gem 'coffee-rails'
-  gem 'uglifier'
+  gem 'sass-rails', '3.2.3'
+  gem 'coffee-rails', '3.2.2'
+  gem 'uglifier', '1.0.3'
 end
 
 
