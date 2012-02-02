@@ -1,22 +1,41 @@
+// This is a manifest file that'll be compiled into application.js, which will include all the files
+// listed below.
+//
+// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
+// or vendor/assets/javascripts of plugins, if any, can be referenced here using a relative path.
+//
+// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
+// the compiled file.
+//
+// WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
+// GO AFTER THE REQUIRES BELOW.
+//
+//= require underscore
+//= require backbone
+//= require json2
+
+
 $(function(){
     // TEMPLATES
 
     var app = { templates: {} };
 
     app.templates.todo = '\
-	    <div class="input-prepend">\
+	    <div class="todo input-prepend">\
 	        <label class="add-on">\
 	            <input type="checkbox" class="todo-check" <% if (done) { %> checked <% } %> />\
 	        </label>\
-	        <input type="text" class="todo-input" size="16" />\
-	        <button class="todo-destroy btn danger">Delete</button>\
+	        <input type="text" class="todo-input" />\
+	        <button class="todo-destroy btn btn-danger">Delete</button>\
 	    </div>\
 	';
 
     app.templates.stats = '\
-	    <%= done %> completed tasks.\
-	    <%= remaining %> remaining tasks.\
-	    <% if (done > 0) { %><button class="todo-clear btn">Clear Completed</button><% } %>\
+        <h3>Stats<% if (done > 0) { %><button class="todo-clear pull-right btn btn-success">Clear Completed</button><% } %></h3>\
+        <ul>\
+        <li><%= done %> completed tasks.</li>\
+        <li><%= remaining %> remaining tasks.</li>\
+        </ul>\
 	';
 
     // MODELS

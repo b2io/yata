@@ -8,9 +8,8 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require twitter/bootstrap
+ *= require bootstrap
  *= require_self
- *= require_tree .
 */
 
 html, body {
@@ -21,26 +20,57 @@ body {
   padding-top: 40px;
 }
 
-.container {
-  width: 820px;
-
-  footer p {
-    text-align: center;
-  }
+h2, h3 {
+  margin-bottom: 10px;
 }
 
 .content {
-    background-color: #fff;
-    padding: 20px;
-    margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
-    -webkit-border-radius: 0 0 6px 6px;
-    -moz-border-radius: 0 0 6px 6px;
-    border-radius: 0 0 6px 6px;
-    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-    box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  background-color: #fff;
+  padding: 20px;
+  margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
+  -webkit-border-radius: 0 0 6px 6px;
+  -moz-border-radius: 0 0 6px 6px;
+  border-radius: 0 0 6px 6px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  box-shadow: 0 1px 2px rgba(0,0,0,.15);
 }
 
-.topbar .auth .btn {
-  margin: 5px 0 5px 10px !important;
+.navbar.navbar-fixed-top .navbar-inner .container {
+  width: inherit;
+  padding: 0 10px;
+  height: 40px;
+
+  .brand {
+    [class^="icon-"] {
+      margin-top: 5px;
+    }
+
+    .label {
+      display: inline-table;
+      text-transform: none;
+      line-height: 12px;
+      margin-left: 2px;
+    }
+  }
+
+  .nav > .dropdown {
+    .dropdown-toggle {
+      padding: 11px 0;
+
+      .avatar {
+        border: 1px solid #999;
+        float: left;
+        margin: -4px 5px 0 0;
+      }
+
+      &:hover > .avatar {
+        border-color: #fff;
+      }
+    }
+
+    &.open > .dropdown-toggle > .avatar {
+      border-color: #fff;
+    }
+  }
 }
