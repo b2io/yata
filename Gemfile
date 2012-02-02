@@ -2,10 +2,8 @@ source 'https://rubygems.org'
 
 gem 'rails'
 gem 'omniauth'
-gem 'omniauth-twitter'
-gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
-gem 'omniauth-github'
+gem 'omniauth-facebook'
 gem 'jquery-rails'
 gem 'rails-backbone'
 

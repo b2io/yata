@@ -2,17 +2,16 @@
 <%= provide(:scripts, javascript_include_tag("todos")) %>
 
 <div id="todoapp" class="row">
-  <div class="span9">
-    <h2>TODOs</h2>
+  <div class="span8">
+    <h2>TODO</h2>
     <div id='create-todo'>
-      <input id='new-todo' placeholder='What needs to be done?' type='text' class="span9" />
+      <input id='new-todo' placeholder='What needs to be done?' type='text' class="span8" />
     </div>
     <div id='todos'>
       <ul id='todo-list' class="unstyled"></ul>
     </div>
   </div>
-  <div class="span5">
-    <h3>Stats</h3>
+  <div class="span4">
     <div id='todo-stats'></div>
   </div>
 </div>
