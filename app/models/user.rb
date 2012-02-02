@@ -2,9 +2,7 @@ class User < ActiveRecord::Base
   has_many :todos
 
   validates :name, presence: true
-
-  validates :uid, presence: true, uniqueness: true
-
+  validates :uid, presence: true
   validates :provider, presence: true
 
   def self.from_omniauth(auth)
