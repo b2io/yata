@@ -1,0 +1,36 @@
+<div class="row" xmlns="http://www.w3.org/1999/html">
+  <div class="span8">
+    <%= form_for @user, url: user_path(@user), html: { class: "form-horizontal" } do |f| %>
+        <fieldset>
+          <legend><strong>Profile</strong>: <%= @user.name %></legend>
+          <div class="control-group">
+            <%= f.label :name, class: "control-label" %>
+            <div class="controls">
+              <%= f.text_field :name, class: "span6" %>
+            </div>
+          </div>
+          <div class="control-group">
+            <%= f.label :email, class: "control-label" %>
+            <div class="controls">
+              <%= f.text_field :email, class: "span6" %>
+            </div>
+          </div>
+          <div class="control-group">
+            <%= f.label :avatar_url, class: "control-label" %>
+            <div class="controls">
+              <%= f.text_field :avatar_url, class: "span6" %>
+            </div>
+          </div>
+          <div class="form-actions">
+            <%= submit_tag "Save Changes", class: "btn btn-primary" %>
+            <%= submit_tag "Cancel", name: "reset", type: "reset", class: "btn" %>
+          </div>
+        </fieldset>
+    <% end %>
+  </div>
+  <div class="span4">
+    <a class="thumbnail">
+      <%= image_tag avatar_url(current_user, size: 300), alt: @user.name %>
+    </a>
+  </div>
+</div>
