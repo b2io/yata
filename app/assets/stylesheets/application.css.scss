@@ -77,6 +77,10 @@ h2, h3 {
   }
 }
 
+.dropdown-menu > li > a > [class^="icon-"] {
+  margin: 1px 4px 0 0;
+}
+
 form {
 
   fieldset > .control-group:first-of-type {
