@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   validates :name, presence: true
   validates :uid, presence: true
   validates :provider, presence: true
+  validates :email, presence: true, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
 
   def self.from_omniauth(auth)
     find_by_provider_and_uid(auth["provider"].to_s, auth["uid"].to_s) || create_with_omniauth(auth)

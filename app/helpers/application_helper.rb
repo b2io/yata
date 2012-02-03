@@ -9,7 +9,7 @@ module ApplicationHelper
     end
   end
 
-  def avatar_url(user = current_user, options = { size: 24 })
+  def get_avatar_url(user = current_user, options = { size: 24 })
     if user.avatar_url.present?
       user.avatar_url
     else

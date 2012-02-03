@@ -14,10 +14,16 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to profile_path, notice: "Profile was successfully updated." }
+        format.html {
+          flash[:success] = "Your profile has been updated."
+          render :profile
+        }
         format.json { head :no_content }
       else
-        format.html { render action: "edit"}
+        format.html {
+          flash[:error] = "There were errors updating your profile."
+          render :profile
+        }
         format.json { render json: @todo.errors, status: :unprocessable_entity }
       end
     end

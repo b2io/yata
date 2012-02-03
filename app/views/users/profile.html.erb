@@ -3,20 +3,20 @@
     <%= form_for @user, url: user_path(@user), html: { class: "form-horizontal" } do |f| %>
         <fieldset>
           <legend><strong>Profile</strong>: <%= @user.name %></legend>
-          <div class="control-group">
-            <%= f.label :name, class: "control-label" %>
+          <div class="control-group <%= "error" if @user.errors[:name].present? %>">
+            <%= f.label :name, "Name:", class: "control-label" %>
             <div class="controls">
               <%= f.text_field :name, class: "span6" %>
             </div>
           </div>
-          <div class="control-group">
-            <%= f.label :email, class: "control-label" %>
+          <div class="control-group <%= "error" if @user.errors[:email].present? %>">
+            <%= f.label :email, "Email:", class: "control-label" %>
             <div class="controls">
               <%= f.text_field :email, class: "span6" %>
             </div>
           </div>
-          <div class="control-group">
-            <%= f.label :avatar_url, class: "control-label" %>
+          <div class="control-group <%= "error" if @user.errors[:avatar_url].present? %>">
+            <%= f.label :avatar_url, "Avatar URL:", class: "control-label" %>
             <div class="controls">
               <%= f.text_field :avatar_url, class: "span6" %>
             </div>
@@ -30,7 +30,7 @@
   </div>
   <div class="span4">
     <a class="thumbnail">
-      <%= image_tag avatar_url(current_user, size: 300), alt: @user.name %>
+      <%= image_tag get_avatar_url(current_user, size: 300), alt: @user.name %>
     </a>
   </div>
 </div>
