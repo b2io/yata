@@ -1,31 +1,14 @@
 <div class="row" xmlns="http://www.w3.org/1999/html">
   <div class="span8">
-    <%= form_for @user, url: user_path(@user), html: { class: "form-horizontal" } do |f| %>
-        <fieldset>
-          <legend><strong>Profile</strong>: <%= @user.name %></legend>
-          <div class="control-group <%= "error" if @user.errors[:name].present? %>">
-            <%= f.label :name, "Name:", class: "control-label" %>
-            <div class="controls">
-              <%= f.text_field :name, class: "span6" %>
-            </div>
-          </div>
-          <div class="control-group <%= "error" if @user.errors[:email].present? %>">
-            <%= f.label :email, "Email:", class: "control-label" %>
-            <div class="controls">
-              <%= f.text_field :email, class: "span6" %>
-            </div>
-          </div>
-          <div class="control-group <%= "error" if @user.errors[:avatar_url].present? %>">
-            <%= f.label :avatar_url, "Avatar URL:", class: "control-label" %>
-            <div class="controls">
-              <%= f.text_field :avatar_url, class: "span6" %>
-            </div>
-          </div>
-          <div class="form-actions">
-            <%= submit_tag "Save Changes", class: "btn btn-primary" %>
-            <%= submit_tag "Cancel", name: "reset", type: "reset", class: "btn" %>
-          </div>
-        </fieldset>
+    <%= simple_form_for @user, html: { class: "form-horizontal" } do |f| %>
+        <legend><strong>Profile</strong>: <%= @user.name %></legend>
+        <%= f.input :name, input_html: { class: "span6" } %>
+        <%= f.input :email, input_html: { class: "span6" } %>
+        <%= f.input :avatar_url, input_html: { class: "span6" } %>
+        <div class="form-actions">
+          <%= f.button :submit, class: "btn-primary" %>
+          <%= submit_tag "Cancel", type: :reset, class: "btn" %>
+        </div>
     <% end %>
   </div>
   <div class="span4">

@@ -15,8 +15,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update_attributes(params[:user])
         format.html {
-          flash[:success] = "Your profile has been updated."
-          render :profile
+          redirect_to :profile, flash: { success: "Your profile has been updated." }
         }
         format.json { head :no_content }
       else

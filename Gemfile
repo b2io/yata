@@ -7,8 +7,7 @@ gem 'omniauth-facebook'
 gem 'jquery-rails'
 gem 'rails-backbone'
 gem 'spork', '0.9.0.rc8'
-gem 'dynamic_form'
-gem 'bootstrap_forms'
+gem 'simple_form', '~> 2.0.0.rc'
 
 group :development do
   gem 'rspec-rails', '2.8.1'
