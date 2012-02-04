@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120201165811) do
+ActiveRecord::Schema.define(:version => 20120204202053) do
+
+  create_table "authorizations", :force => true do |t|
+    t.string   "provider"
+    t.string   "uid"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "todos", :force => true do |t|
     t.string   "text"
@@ -22,8 +30,6 @@ ActiveRecord::Schema.define(:version => 20120201165811) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "provider"
-    t.string   "uid"
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false

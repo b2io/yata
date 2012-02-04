@@ -4,13 +4,17 @@ class SessionsController < ApplicationController
   end
 
   def create
-    session[:user_id] = User.from_omniauth(env["omniauth.auth"]).id
-    redirect_to todo_path, flash: { info: "Signed in!" }
+    auth = env["omniauth.auth"]
+    unless @auth = Authorization.find_from_hash(auth)
+      @auth = Authorization.create_from_hash(auth, current_user)
+    end
+    self.current_user = @auth.user
+    redirect_to todo_path, flash: { success: "Signed in!" }
   end
 
   def destroy
     session[:user_id] = nil
-    redirect_to root_url, flash: { info: "Signed out." }
+    redirect_to root_url, flash: { success: "Signed out." }
   end
 
   def failure
