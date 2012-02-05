@@ -1,0 +1,13 @@
+<div id="confirm-unlink" class="modal fade">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">&times;</a>
+    <h3>Unlink Provider</h3>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure you want unlink this provider? This action cannot be be undone.</p>
+  </div>
+  <div class="modal-footer">
+    <a class="btn" data-dismiss="modal">Cancel</a>
+    <%= link_to "Unlink Provider", authorization_path, method: :delete, class: "btn btn-danger" %>
+  </div>
+</div>

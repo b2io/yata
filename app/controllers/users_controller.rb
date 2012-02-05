@@ -1,4 +1,4 @@
-  class UsersController < ApplicationController
+class UsersController < ApplicationController
   before_filter :authorize
 
   def profile
@@ -27,4 +27,15 @@
       end
     end
   end
+
+  def destroy
+    # TODO: Validate that the user is attempting to delete their own account.
+
+    @user = User.find(params[:id])
+    @user.destroy
+
+    session.delete(:user_id)
+    redirect_to "/", flash: { success: "Your account has been deleted." }
+  end
+
 end

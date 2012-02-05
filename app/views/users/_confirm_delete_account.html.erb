@@ -1,0 +1,13 @@
+<div id="confirm-delete-account" class="modal fade">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">&times;</a>
+    <h3>Delete Account</h3>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure you want to delete your account? This action cannot be be undone.</p>
+  </div>
+  <div class="modal-footer">
+    <a class="btn" data-dismiss="modal">Cancel</a>
+    <%= link_to "Delete Account", user_path(current_user.id), method: :delete, class: "btn btn-danger" %>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
-  has_many :authorizations
-  has_many :todos
+  has_many :authorizations, dependent: :delete_all
+  has_many :todos, dependent: :delete_all
 
   validates :name, presence: true
   validates :email, presence: true, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
