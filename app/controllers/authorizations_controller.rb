@@ -11,4 +11,17 @@ class AuthorizationsController < ApplicationController
     end
   end
 
+  protected
+
+  def authorize
+    # Run basic authorization.
+    super
+
+    # If the authorization doesn't belong to the user, forbid the action.
+    unless Authorization.find(params[:id]).user_id == current_user.id && current_user.authorizations.length > 1
+      redirect_to "/", flash: { error: "Unauthorized access." }
+      false
+    end
+  end
+
 end
