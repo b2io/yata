@@ -11,4 +11,8 @@ module UsersHelper
     end
   end
 
+  def confirm_delete_auth_message(auth)
+    "Are you sure you want to unlink this " + provider_name(auth) + " (" + auth.email + ") account?"
+  end
+
 end

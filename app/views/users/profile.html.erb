@@ -28,6 +28,7 @@
               <th>UID</th>
               <th>Email</th>
               <th>Created</th>
+              <th></th>
             </tr>
             </thead>
             <tbody>
@@ -37,6 +38,7 @@
                   <td><%= auth.uid %></td>
                   <td><%= auth.email %></td>
                   <td><%= auth.created_at.to_formatted_s(:long_ordinal) %></td>
+                  <td><%= link_to content_tag(:i, "", class: "icon-remove"), authorization_path(auth.id), method: :delete, confirm: confirm_delete_auth_message(auth) %></td>
                 </tr>
             <% end %>
             </tbody>
