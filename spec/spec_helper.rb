@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'spork'
 require 'capybara/rspec'
+require 'database_cleaner'
 
 Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However,
@@ -22,27 +23,44 @@ Spork.prefork do
     config.include IntegrationSpecHelper, type: :request
 
     # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-    config.fixture_path = "#{::Rails.root}/spec/fixtures"
+    # config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
     # If you're not using ActiveRecord, or you'd prefer not to run each of your
     # examples within a transaction, remove the following line or assign false
     # instead of true.
-    config.use_transactional_fixtures = true
+    # config.use_transactional_fixtures = false
 
     # If true, the base class of anonymous controllers will be inferred
     # automatically. This will be the default behavior in future versions of
     # rspec-rails.
     config.infer_base_class_for_anonymous_controllers = false
-  end
 
-  Capybara.default_host = "http://localhost:3000"
+    config.before(:suite) do
+      DatabaseCleaner.strategy = :deletion
+    end
+
+    config.before(:each) do
+      DatabaseCleaner.start
+    end
+
+    config.after(:each) do
+      DatabaseCleaner.clean
+    end
+  end
 
   OmniAuth.config.test_mode = true
   OmniAuth.config.add_mock(:google_oauth2, {
-      uid: "12345",
+      uid: "01234",
       info: {
-          name: "Drew Miller",
-          email: "andrew.brett.miller@gmail.com"
+          name: "Example User",
+          email: "user@example.com"
+      }
+  })
+  OmniAuth.config.add_mock(:facebook, {
+      uid: "56789",
+      info: {
+          name: "Example User",
+          email: "user@example.com"
       }
   })
 
