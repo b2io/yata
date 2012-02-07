@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
       if @auth
         # If that authorization is for this user: note that we've already linked it.
         if @auth.user.id == current_user.id
-          message = { info: "That login is already linked to this YATA account." }
+          message = { warn: "That login is already linked to this YATA account." }
         # Otherwise, it's for another user: note that this account cannot be linked as is.
         else
           message = { error: "That login is linked to another YATA account." }

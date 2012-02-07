@@ -1,7 +1,5 @@
 require 'rubygems'
 require 'spork'
-require 'capybara/rspec'
-require 'database_cleaner'
 
 Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However,
@@ -23,50 +21,35 @@ Spork.prefork do
     config.include IntegrationSpecHelper, type: :request
 
     # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-    # config.fixture_path = "#{::Rails.root}/spec/fixtures"
+    config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
     # If you're not using ActiveRecord, or you'd prefer not to run each of your
     # examples within a transaction, remove the following line or assign false
     # instead of true.
-    # config.use_transactional_fixtures = false
+    config.use_transactional_fixtures = true
 
     # If true, the base class of anonymous controllers will be inferred
     # automatically. This will be the default behavior in future versions of
     # rspec-rails.
     config.infer_base_class_for_anonymous_controllers = false
-
-    config.before(:suite) do
-      DatabaseCleaner.strategy = :deletion
-    end
-
-    config.before(:each) do
-      DatabaseCleaner.start
-    end
-
-    config.after(:each) do
-      DatabaseCleaner.clean
-    end
   end
-
-  OmniAuth.config.test_mode = true
-  OmniAuth.config.add_mock(:google_oauth2, {
-      uid: "01234",
-      info: {
-          name: "Example User",
-          email: "user@example.com"
-      }
-  })
-  OmniAuth.config.add_mock(:facebook, {
-      uid: "56789",
-      info: {
-          name: "Example User",
-          email: "user@example.com"
-      }
-  })
-
 end
 
 Spork.each_run do
   # This code will be run each time you run your specs.
-
 end
+
+# Big Fat Hack (TM) so the ActiveRecord connections are shared across threads.
+# This is a variation of a hack you can find all over the web to make
+# capybara usable without having to switch to non transactional
+# fixtures.
+# http://groups.google.com/group/ruby-capybara/browse_thread/thread/248e89ae2acbf603/e5da9e9bfac733e0
+Thread.main[:activerecord_connection] = ActiveRecord::Base.retrieve_connection
+
+def (ActiveRecord::Base).connection
+  Thread.main[:activerecord_connection]
+end
+
+# This is how we load our support files for rspec, this keeps the size of
+# the spec_helper.rb file manageable.
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}

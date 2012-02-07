@@ -6,7 +6,7 @@ class AuthorizationsController < ApplicationController
     @authorization.destroy
 
     respond_to do |format|
-      format.html { redirect_to profile_path + "#/accounts" }
+      format.html { redirect_to profile_path + "#/accounts", flash: { success: "Successfully unlinked that login from your YATA account." } }
       format.json { head :no_content }
     end
   end

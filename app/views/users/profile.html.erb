@@ -47,7 +47,7 @@
                   <td><%= auth.created_at.to_formatted_s(:long_ordinal) %></td>
                   <% if @user.authorizations.length > 1 %>
                       <td>
-                        <%= link_to content_tag(:i, "", class: "icon-remove"), "#confirm-unlink", 'data-toggle' => "modal", 'data-unlink' => "#{auth.id}" %>
+                        <%= link_to content_tag(:i, "", class: "icon-remove"), "#confirm-unlink", 'data-toggle' => "modal", 'data-unlink' => "#{auth.id}", title: "Unlink login" %>
                       </td>
                   <% end %>
                 </tr>

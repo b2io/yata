@@ -58,6 +58,7 @@ feature "Profile page" do
       should have_content 'Google 01234 user@example.com'
       should have_content 'Facebook 56789 user@example.com'
     end
+    should have_selector 'div.alert-success', text: 'Successfully linked that login to your YATA account.'
   end
 
   scenario "Attempting to link an existing login to the account that doesn't owns it", js: true do
@@ -78,14 +79,71 @@ feature "Profile page" do
     click_link 'Link a Facebook login'
     click_link 'Link a Facebook login'
 
-    should have_selector 'div.alert', text: "That login is already linked to this YATA account."
+    should have_selector 'div.alert-warn', text: "That login is already linked to this YATA account."
   end
 
-  pending "Unlinking a login #{__FILE__}"
-  pending "Attempting to unlink a login when the user only has one #{__FILE__}"
-  pending "Attempting to unlink a login that doesn't belong to the user #{__FILE__}"
+  scenario "Unlink option hidden when user has only one linked login", js: true do
+    # Verify there are no unlink actions offered
+    click_link 'Linked Accounts'
+    evaluate_script("$('a[data-unlink]').length").should eq(0)
 
-  pending "Attempting to delete a user account without being logged in #{__FILE__}"
-  pending "Attempting to delete another user's account #{__FILE__}"
-  pending "Deleting the current user's account #{__FILE__}"
+    # Link a second account; verify there are now two unlink actions offered.
+    click_link 'Link a Facebook login'
+    page.evaluate_script("$('a[data-unlink]').length").should eq(2)
+  end
+
+  scenario "Unlink icon triggers modal confirmation which can be canceled two ways", js: true do
+    # Link a second account.
+    click_link 'Linked Accounts'
+    click_link 'Link a Facebook login'
+
+    # Try to unlink the first account, but cancel using the button in the footer; verify there are still two accounts.
+    page.execute_script("$('a[data-unlink]')[0].click()")
+    should have_css '#confirm-unlink', visible: true
+    page.execute_script("$('#confirm-unlink .modal-footer a[title=\"Cancel\"]').click()")
+    should have_css '#confirm-unlink', visible: false
+    page.evaluate_script("$('a[data-unlink]').length").should eq(2)
+
+    # Try to unlink the second account, but cancel using the button in the header; verify there are still two accounts.
+    page.execute_script("$('a[data-unlink]')[1].click()")
+    should have_css '#confirm-unlink', visible: true
+    page.execute_script("$('#confirm-unlink .modal-header a[title=\"Cancel\"]').click()")
+    should have_css '#confirm-unlink', visible: false
+    page.evaluate_script("$('a[data-unlink]').length").should eq(2)
+  end
+
+  scenario "Unlinking a login", js: true do
+    # Link a second account.
+    click_link 'Linked Accounts'
+    click_link 'Link a Facebook login'
+
+    # Unlink the first account; verify that the account is gone.
+    page.execute_script("$('a[data-unlink=\"1\"]').click()")
+    should have_css '#confirm-unlink', visible: true
+    page.execute_script("$('#confirm-unlink .modal-footer a[title=\"Unlink Provider\"]').click()")
+    should have_css '#confirm-unlink', visible: false
+    should have_no_content 'Google 01234 user@example.com'
+    should have_selector 'div.alert-success', text: 'Successfully unlinked that login from your YATA account.'
+  end
+
+  scenario "Delete account button triggers modal confirmation which can be canceled two ways", js: true do
+    # Try to delete the account, but cancel using the button in the footer.
+    click_link 'Delete Account'
+    should have_css '#confirm-delete-account', visible: true
+    page.execute_script("$('#confirm-delete-account .modal-footer a[title=\"Cancel\"]').click()")
+    should have_css '#confirm-delete-account', visible: false
+
+    # Try to delete the account, but cancel using the button in the header.
+    click_link 'Delete Account'
+    should have_css '#confirm-delete-account', visible: true
+    page.execute_script("$('#confirm-delete-account .modal-header a[title=\"Cancel\"]').click()")
+    should have_css '#confirm-delete-account', visible: false
+  end
+
+  scenario "Deleting your account", js: true do
+    click_link 'Delete Account'
+    should have_css '#confirm-delete-account', visible: true
+    page.execute_script("$('#confirm-delete-account .modal-footer a[title=\"Delete Account\"]').click()")
+    should have_selector 'div.alert-success', text: 'Your account has been deleted.'
+  end
 end
