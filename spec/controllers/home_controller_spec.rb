@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SessionsController do
   render_views
 
-   describe "GET 'new'" do
+  describe "GET 'new'" do
 
     it "should be successful" do
       get :new

@@ -6,22 +6,26 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 gem 'jquery-rails'
 gem 'rails-backbone'
-gem 'spork', '0.9.0.rc8'
 gem 'simple_form', '~> 2.0.0.rc'
+gem 'thin'
+gem 'eventmachine', '~> 1.0.0.beta.4.1', platforms: :mingw_19
 
 group :development do
-  gem 'rspec-rails', '2.8.1'
-  gem 'sqlite3', '1.3.5'
 end
 
 group :test do
-  gem 'capybara', '1.1.2'
-  gem 'webrat', '0.7.1'	
+  gem 'capybara'
+  gem 'launchy', '~> 2.0.5'
+end
+
+group :development, :test do
+  gem 'sqlite3', '1.3.5'
+  gem 'rspec-rails', '2.8.1'
+  gem 'spork', '0.9.0.rc8'
 end
 
 group :production do
   gem 'pg'
-  gem 'thin'
 end
 
 group :assets do
@@ -30,6 +34,5 @@ group :assets do
   gem 'uglifier', '1.0.3'
 end
 
+# Pull in the personal Gemfile if it exists.
 eval File.read(File.expand_path("Gemfile.personal")) if File.exists?(File.expand_path("Gemfile.personal"))
-
-

@@ -4,23 +4,21 @@ class SessionsController < ApplicationController
   end
 
   def create
-    # Find/Create the authorization:
-
+    # Pull the auth-hash from the environment.
     auth = env["omniauth.auth"]
 
-    # Try and find the authorization
+    # Try and find the authorization in the system.
     @auth = Authorization.find_from_hash(auth)
 
     # If there's a current-user:
     if current_user
-      message = {}
-
       # If we found an authorization:
       if @auth
+        # If that authorization is for this user: note that we've already linked it.
         if @auth.user.id == current_user.id
           message = { info: "That login is already linked to this YATA account." }
+        # Otherwise, it's for another user: note that this account cannot be linked as is.
         else
-          # TODO (DM): Implement account merges.
           message = { error: "That login is linked to another YATA account." }
         end
       # Otherwise, we haven't found an existing authorization:
