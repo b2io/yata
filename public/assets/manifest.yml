@@ -20,6 +20,7 @@ twitter_256.png: twitter_256-fd3b8237499a2274be7bef5f66afbd78.png
 twitter_32.png: twitter_32-9d2707961b1a73db59c8ef68fc98f979.png
 twitter_64.png: twitter_64-69259a9934533f33d0a13479590c75fd.png
 application.js: application-ae94749d9acc50b53890cc8d69103888.js
+profile.js: profile-a7414b210600b0cd17f0d31a5650a5ea.js
 todos.js: todos-db46fa04c265d133bf5e27339d2d34e5.js
 application.css: application-5aa4972ada7b34e7023810f40010479c.css
 todos.css: todos-7659b974588d34cfef8b4f8dcd5d4b99.css
