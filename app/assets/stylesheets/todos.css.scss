@@ -99,3 +99,9 @@ $done-text: #468847;
     }
   }
 }
+
+.dd-placeholder {
+  @extend .todo;
+
+  background-color: lighten($background, 5%);
+}

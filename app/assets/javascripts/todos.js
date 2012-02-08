@@ -13,6 +13,7 @@
 //= require underscore
 //= require backbone
 //= require json2
+//= require jquery-ui
 
 
 $(function(){
@@ -21,7 +22,7 @@ $(function(){
     var app = { templates: {} };
 
     app.templates.todo = '\
-	    <div class="todo <% if (done) { %> done <% } %>">\
+	    <div data-id="<%= id %>" class="todo <% if (done) { %> done <% } %>">\
 	        <input type="checkbox" class="todo-check" <% if (done) { %> checked <% } %> />\
 	        <div class="todo-content">\
                 <span class="todo-label"><%= text %></span>\
@@ -70,7 +71,7 @@ $(function(){
 
         // Get the next viable 'order' for the todo.
         nextOrder: function() {
-            return (!this.length) ? 1 : this.last().get('order') + 1;
+            return this.length;
         },
 
         // Define a way to compare todos.
@@ -110,13 +111,6 @@ $(function(){
         render: function() {
             // Render the view by running the model (as JSON) through the templating engine.
             $(this.el).html(this.template(this.model.toJSON()));
-
-            // Pull the 'text' property off the model.
-            var text = this.model.get('text');
-
-            // Set the text of the label and input appropriately.
-            //this.$('.todo-label').text(text);
-            //this.$('.todo-input').val(text);
 
             return this;
         },
@@ -160,14 +154,14 @@ $(function(){
     });
 
     window.AppView = Backbone.View.extend({
+
+        // Properties
+
         el: $('#todoapp'),
 
         statsTemplate: _.template(app.templates.stats),
 
-        events: {
-            'keypress #new-todo'	: 'createOnEnter',
-            'click .todo-clear'		: 'clearCompleted'
-        },
+        // Creation
 
         initialize: function() {
             this.input = this.$('#new-todo');
@@ -178,6 +172,14 @@ $(function(){
 
             Todos.fetch();
         },
+
+        events: {
+            'keypress #new-todo'	: 'createOnEnter',
+            'click .todo-clear'		: 'clearCompleted',
+            'sortupdate #todo-list' : 'updateAfterSort'
+        },
+
+        // Handlers
 
         render: function() {
             this.$('#todo-stats').html(this.statsTemplate({
@@ -206,13 +208,30 @@ $(function(){
         clearCompleted: function() {
             _.each(Todos.done(), function(todo) { todo.destroy(); });
             return false;
+        },
+
+        updateAfterSort: function(event, ui) {
+            // Go through each of the todos in the list.
+            _.each(this.$('.todo'), function(item, idx) {
+                // Get the related todo (using the 'data-id' as a key) and update its order.
+                Todos.get($(item).data('id')).save({ 'order': idx });
+            });
         }
+
     });
 
 // INITIALIZATION
 
     window.Todos = new TodoList;
     window.App = new AppView;
+
+    // Make the todo-list sortable.
+    $('#todo-list').sortable({
+        distance: 10,
+        placeholder: "dd-placeholder",
+        opacity: 0.75
+    }).disableSelection();
+
 });
 
 
