@@ -21,12 +21,13 @@ $(function(){
     var app = { templates: {} };
 
     app.templates.todo = '\
-	    <div class="todo input-prepend">\
-	        <label class="add-on">\
-	            <input type="checkbox" class="todo-check" <% if (done) { %> checked <% } %> />\
-	        </label>\
-	        <input type="text" class="todo-input" />\
-	        <button class="todo-destroy btn btn-danger">Delete</button>\
+	    <div class="todo <% if (done) { %> done <% } %>">\
+	        <input type="checkbox" class="todo-check" <% if (done) { %> checked <% } %> />\
+	        <div class="todo-content">\
+                <span class="todo-label"><%= text %></span>\
+                <input type="text" class="todo-input" value="<%= text %>" />\
+	        </div>\
+	        <a class="todo-destroy close" title="<% if (done) { %>Clear<% } else { %>Delete<% } %>"><% if (done) { %>&#x2713;<% } else { %>&#x2717;<% } %></a>\
 	    </div>\
 	';
 
@@ -81,55 +82,81 @@ $(function(){
 // VIEWS
 
     window.TodoView = Backbone.View.extend({
+
+        // Properties
+
         tagName: 'li',
 
         template: _.template(app.templates.todo),
 
-        events: {
-            'click .todo-check'			: 'toggleDone',
-            'click .todo-destroy'		: 'clear',
-            'keypress .todo-input'		: 'updateOnEnter'
-        },
+        // Creation
 
         initialize: function() {
+            // Listen for relevant changes on the model:
             this.model.bind('change', this.render, this);
             this.model.bind('destroy', this.remove, this);
         },
 
+        events: {
+            'click .todo-check'			: 'toggleDone',
+            'click .todo-destroy'		: 'clear',
+            'dblclick .todo'            : 'edit',
+            'keypress .todo-input'		: 'updateOnEnter',
+            'blur .todo-input'          : 'close'
+        },
+
+        // Handlers
+
         render: function() {
+            // Render the view by running the model (as JSON) through the templating engine.
             $(this.el).html(this.template(this.model.toJSON()));
 
-            this.content = this.$('.todo-content');
-            this.input = this.$('.todo-input');
-
+            // Pull the 'text' property off the model.
             var text = this.model.get('text');
 
-            this.content.text(text);
-
-            this.input.bind('blur', _.bind(this.close, this)).val(text);
+            // Set the text of the label and input appropriately.
+            //this.$('.todo-label').text(text);
+            //this.$('.todo-input').val(text);
 
             return this;
         },
 
-        toggleDone: function() {
-            this.model.toggle();
-        },
-
-        close: function() {
-            this.model.save({ text: this.input.val() });
-        },
-
-        updateOnEnter: function(e) {
-            if (e.keyCode == 13) this.close();
-        },
-
         remove: function() {
+            // Remove the view from the list.
             $(this.el).remove();
         },
 
+        toggleDone: function() {
+            // Flip the done flag on the model.
+            this.model.toggle();
+        },
+
         clear: function() {
+            // Remove the model from its collection.
             this.model.destroy();
+        },
+
+        edit: function(e) {
+            // Indicate that we're editing this item.
+            this.$('.todo').addClass('editing');
+
+            // Set focus on the input.
+            this.$('.todo-input').focus();
+        },
+
+        updateOnEnter: function(e) {
+            // If the 'enter' key has been pressed: close the item.
+            if (e.keyCode == 13) this.close();
+        },
+
+        close: function() {
+            // Indicate that we're done editing this item.
+            this.$('.todo').removeClass('editing');
+
+            // Update the model with the new text.
+            this.model.save({ text: this.$('.todo-input').val() });
         }
+
     });
 
     window.AppView = Backbone.View.extend({
