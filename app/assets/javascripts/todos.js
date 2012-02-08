@@ -55,7 +55,7 @@ $(function(){
 
     window.TodoList = Backbone.Collection.extend({
         model: Todo,
-        url: 'todos/',
+        url: '/todos/',
 
         // Get the list of todos that are completed.
         done: function() {
