@@ -1,5 +1,14 @@
 language: ruby
+
+branches:
+  only:
+    - 'master'
+
 rvm:
   - 1.9.2
   - 1.9.3
-after_install: "bundle exec rake db:test:prepare"
+
+before_install: "./script/ci/before_install.sh"
+bundle_args: "--without development production"
+before_script: "./script/ci/before.sh"
+script: "bundle exec rake travis"
