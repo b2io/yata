@@ -1,12 +1,5 @@
 require 'spec_helper'
 
 describe UsersController do
-
-  describe "GET 'profile'" do
-    it "returns http success" do
-      get 'profile'
-      response.should be_success
-    end
-  end
-
+  pending "add some examples to (or delete) #{__FILE__}"
 end

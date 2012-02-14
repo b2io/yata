@@ -104,6 +104,11 @@ feature "Profile page" do
     should have_css '#confirm-unlink', visible: false
     page.evaluate_script("$('a[data-unlink]').length").should eq(2)
 
+    # Wait for the animation to be completed.
+    wait_until do
+      page.evaluate_script("$('.modal-backdrop').length") == 0
+    end
+
     # Try to unlink the second account, but cancel using the button in the header; verify there are still two accounts.
     page.execute_script("$('a[data-unlink]')[1].click()")
     should have_css '#confirm-unlink', visible: true
@@ -132,6 +137,11 @@ feature "Profile page" do
     should have_css '#confirm-delete-account', visible: true
     page.execute_script("$('#confirm-delete-account .modal-footer a[title=\"Cancel\"]').click()")
     should have_css '#confirm-delete-account', visible: false
+
+    # Wait for the animation to be completed.
+    wait_until do
+      page.evaluate_script("$('.modal-backdrop').length") == 0
+    end
 
     # Try to delete the account, but cancel using the button in the header.
     click_link 'Delete Account'

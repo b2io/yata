@@ -6,7 +6,6 @@ branches:
 
 rvm:
   - 1.9.2
-  - 1.9.3
 
 before_install: "./script/ci/before_install.sh"
 bundle_args: "--without development production"

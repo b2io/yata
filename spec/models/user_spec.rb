@@ -3,7 +3,7 @@ require 'spec_helper'
 describe User do
 
   before(:each) do
-    @user = User.new(name: "Example User", uid: 1, provider: "facebook")
+    @user = User.new(name: "Example User", email: "user@example.com")
   end
 
   describe 'User should respond to' do
@@ -21,25 +21,15 @@ describe User do
       it { should_not be_valid }
     end
 
-    describe "provider" do
-      it { should respond_to(:provider) }
+    describe "email" do
+      it { should respond_to(:email) }
+
       before { @user.save }
-      its(:provider) { should_not be_blank }
+      its(:email) { should_not be_blank }
     end
 
-    describe "when provider is not present" do
-      before { @user.provider = " " }
-      it { should_not be_valid }
-    end
-
-    describe "uid" do
-      it { should respond_to(:uid) }
-      before { @user.save }
-      its(:uid) { should_not be_blank }
-    end
-
-    describe "when uid is not present" do
-      before { @user.uid = " " }
+    describe "when email is not present" do
+      before { @user.name = " " }
       it { should_not be_valid }
     end
   end
