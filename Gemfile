@@ -7,8 +7,6 @@ gem 'omniauth-facebook'
 gem 'jquery-rails'
 gem 'rails-backbone'
 gem 'simple_form', '~> 2.0.0.rc'
-gem 'thin'
-gem 'eventmachine', '~> 1.0.0.beta.4.1', platforms: :mingw_19
 
 group :development do
 end
@@ -27,6 +25,7 @@ end
 
 group :production do
   gem 'pg'
+  gem 'thin'
 end
 
 group :assets do
