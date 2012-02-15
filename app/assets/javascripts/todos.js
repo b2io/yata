@@ -32,6 +32,12 @@ $(function(){
 	    </div>\
 	';
 
+    app.templates.list = '\
+        <div data-id="<%= id %>" class="todo-list">\
+            <%= text %>\
+        </div>\
+    ';
+
     app.templates.stats = '\
         <h3>Stats<% if (done > 0) { %><button class="todo-clear pull-right btn btn-success">Clear Completed</button><% } %></h3>\
         <ul>\
@@ -80,7 +86,49 @@ $(function(){
         }
     });
 
+    window.List = Backbone.Model.extend({
+        defaults: function() {
+            return {
+                text: "New List",
+                order: Lists.nextOrder()
+            }
+        }
+    });
+
+    window.ListList = Backbone.Collection.extend({
+        model: List,
+        url: '/lists/',
+
+        nextOrder: function() {
+            return this.length;
+        },
+
+        comparator: function(list) {
+            return list.get('order');
+        }
+    });
+
 // VIEWS
+
+    window.ListView = Backbone.View.extend({
+        tagName: 'li',
+        template: _.template(app.templates.list),
+
+        initialize: function() {
+          this.model.bind('change', this.render, this);
+          this.model.bind('destroy', this.remove, this);
+        },
+
+        render: function() {
+            $(this.el).html(this.template(this.model.toJSON()));
+
+            return this;
+        },
+
+        remove: function() {
+            $(this.el).remove();
+        }
+    });
 
     window.TodoView = Backbone.View.extend({
 
@@ -166,17 +214,24 @@ $(function(){
         initialize: function() {
             this.input = this.$('#new-todo');
 
-            Todos.bind('add', this.addOne, this);
-            Todos.bind('reset', this.addAll, this);
+            Todos.bind('add', this.addOneTodo, this);
+            Todos.bind('reset', this.addAllTodos, this);
             Todos.bind('all', this.render, this);
 
             Todos.fetch();
+
+            Lists.bind('add', this.addOneList, this);
+            Lists.bind('reset', this.addAllLists, this);
+            Lists.bind('all', this.render, this);
+
+            Lists.fetch();
         },
 
         events: {
             'keypress #new-todo'	: 'createOnEnter',
             'click .todo-clear'		: 'clearCompleted',
-            'sortupdate #todo-list' : 'updateAfterSort'
+            'sortupdate #todo-list' : 'updateTodosAfterSort',
+            'sortupdate #list-list' : 'updateListsAfterSort'
         },
 
         // Handlers
@@ -189,13 +244,22 @@ $(function(){
             }));
         },
 
-        addOne: function(todo) {
+        addOneTodo: function(todo) {
             var view = new TodoView({ model: todo });
             this.$('#todo-list').append(view.render().el);
         },
 
-        addAll: function() {
-            Todos.each(this.addOne);
+        addAllTodos: function() {
+            Todos.each(this.addOneTodo);
+        },
+
+        addOneList: function(list) {
+            var view = new ListView({ model: list });
+            this.$('#list-list').append(view.render().el);
+        },
+
+        addAllLists: function() {
+          Lists.each(this.addOneList);
         },
 
         createOnEnter: function(e) {
@@ -210,11 +274,17 @@ $(function(){
             return false;
         },
 
-        updateAfterSort: function(event, ui) {
+        updateTodosAfterSort: function(event, ui) {
             // Go through each of the todos in the list.
             _.each(this.$('.todo'), function(item, idx) {
                 // Get the related todo (using the 'data-id' as a key) and update its order.
                 Todos.get($(item).data('id')).save({ 'order': idx });
+            });
+        },
+
+        updateListsAfterSort: function(event, ui) {
+            _.each(this.$('.list'), function(item, idx) {
+               Lists.get($(item).data('id')).save({ 'order': idx });
             });
         }
 
@@ -222,11 +292,18 @@ $(function(){
 
 // INITIALIZATION
 
+    window.Lists = new ListList;
     window.Todos = new TodoList;
     window.App = new AppView;
 
     // Make the todo-list sortable.
     $('#todo-list').sortable({
+        distance: 10,
+        placeholder: "dd-placeholder",
+        opacity: 0.75
+    }).disableSelection();
+
+    $('#list-list').sortable({
         distance: 10,
         placeholder: "dd-placeholder",
         opacity: 0.75

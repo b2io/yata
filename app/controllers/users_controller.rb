@@ -23,7 +23,7 @@ class UsersController < ApplicationController
           flash[:error] = "There were errors updating your profile."
           render :profile
         }
-        format.json { render json: @todo.errors, status: :unprocessable_entity }
+        format.json { render json: @list.errors, status: :unprocessable_entity }
       end
     end
   end

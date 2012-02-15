@@ -1,29 +1,27 @@
-class TodosController < ApplicationController
+class ListsController < ApplicationController
   before_filter :authorize
 
-  # GET /todos
-  # GET /todos.json
+  # GET /lists.json
   def index
-    @todos = Todo.find_all_by_user_id(current_user.id)
+    @lists = List.find_all_by_user_id(current_user.id)
 
     respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @todos }
+      format.json { render json: @lists }
     end
   end
 
-  # GET /todos/1.json
+  # GET /lists/1.json
   def show
-    @list = Todo.find(params[:id])
+    @list = List.find(params[:id])
 
     respond_to do |format|
       format.json { render json: @list }
     end
   end
 
-  # GET /todos/new.json
+  # GET /lists/new.json
   def new
-    @list = Todo.new
+    @list = List.new
     @list.user_id = current_user.id
 
     respond_to do |format|
@@ -31,9 +29,9 @@ class TodosController < ApplicationController
     end
   end
 
-  # POST /todos.json
+  # POST /lists.json
   def create
-    @list = Todo.new(params[:list])
+    @list = List.new(params[:list])
     @list.user_id = current_user.id
 
     respond_to do |format|
@@ -45,9 +43,9 @@ class TodosController < ApplicationController
     end
   end
 
-  # PUT /todos/1.json
+  # PUT /lists/1.json
   def update
-    @list = Todo.find(params[:id])
+    @list = List.find(params[:id])
 
     respond_to do |format|
       if @list.update_attributes(params[:list])
@@ -58,9 +56,9 @@ class TodosController < ApplicationController
     end
   end
 
-  # DELETE /todos/1.json
+  # DELETE /lists/1.json
   def destroy
-    @list = Todo.find(params[:id])
+    @list = List.find(params[:id])
     @list.destroy
 
     respond_to do |format|
