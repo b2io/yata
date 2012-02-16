@@ -111,12 +111,16 @@ $(function(){
         template: _.template(app.templates.list),
 
         initialize: function() {
-          this.model.bind('change', this.render, this);
-          this.model.bind('destroy', this.remove, this);
+            this.model.bind('change', this.render, this);
+            this.model.bind('destroy', this.remove, this);
+
+            // TODO: Add in-place editing to lists.
+            // TODO: Add hidden delete action to lists.
+            // TODO: Add modal confirmation for delete list.
         },
 
         events: {
-          'click .list'                 : 'switchLists'
+            'click .list'                 : 'switchLists'
         },
 
         render: function() {
@@ -130,6 +134,11 @@ $(function(){
         },
 
         switchLists: function() {
+            $('#list-list li').removeClass('active');
+            $('#list-list li i').removeClass('icon-white');
+            $(this.el).addClass('active');
+            $('#list-list li.active a i').addClass('icon-white');
+
             var listId = $(this.el).children('a').data('id');
 
             Todos.fetch({ data: { list: listId } })
@@ -267,10 +276,12 @@ $(function(){
         },
 
         addAllLists: function() {
-          Lists.each(this.addOneList);
+            Lists.each(this.addOneList);
         },
 
         createOnEnter: function(e) {
+            // TODO: Update to set list_id properly.
+
             var text = this.input.val();
             if (!text || e.keyCode != 13) return;
             Todos.create({ text: text });
@@ -292,7 +303,7 @@ $(function(){
 
         updateListsAfterSort: function(event, ui) {
             _.each(this.$('.list'), function(item, idx) {
-               Lists.get($(item).data('id')).save({ 'order': idx });
+                Lists.get($(item).data('id')).save({ 'order': idx });
             });
         }
 
@@ -313,12 +324,18 @@ $(function(){
 
     $('#list-list').sortable({
         distance: 10,
-        placeholder: "dd-placeholder",
         opacity: 0.75
     }).disableSelection();
 
+    // TODO: Update to allow a todo to be dropped on a list.
+    // TODO: Add UI to create a new list.
+
     $('#inbox-list').on('click', function() {
-       Todos.fetch();
+        $('#list-list li').removeClass('active');
+        $('#inbox-list').addClass('active');
+        $('#list-list li.active a i').addClass('icon-white');
+
+        Todos.fetch();
     });
 
 });
