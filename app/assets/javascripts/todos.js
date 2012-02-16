@@ -355,10 +355,12 @@ $(function(){
         var listId = $(this).data('id');
 
         var todo = Todos.get(todoId);
-        todo.save({ 'list_id': listId || null });
-        Todos.remove(todo);
 
-        return false;
+        if (todo.get('list_id') != listId)
+        {
+            todo.save({ 'list_id': listId || null });
+            Todos.remove(todo);
+        }
     }
 
     $('#inbox-list .list').droppable(listDroppableOptions);
