@@ -17,31 +17,6 @@
 
 
 $(function(){
-    // TEMPLATES
-
-    var app = { templates: {} };
-
-    app.templates.todo = '\
-	    <div data-id="<%= id %>" class="todo <% if (done) { %> done <% } %>">\
-	        <input type="checkbox" class="todo-check" <% if (done) { %> checked <% } %> />\
-	        <div class="todo-content">\
-                <span class="todo-label"><%= text %></span>\
-                <input type="text" class="todo-input" value="<%= text %>" />\
-	        </div>\
-	        <a class="todo-destroy close" title="<% if (done) { %>Clear<% } else { %>Delete<% } %>"><% if (done) { %>&#x2713;<% } else { %>&#x2717;<% } %></a>\
-	    </div>\
-	';
-
-    app.templates.list = '<a data-id="<%= id %>" class="list editable-list"><%= text %></a>';
-
-    app.templates.stats = '\
-        <h3>Stats<% if (done > 0) { %><button class="todo-clear pull-right btn btn-success">Clear Completed</button><% } %></h3>\
-        <ul>\
-        <li><%= done %> completed tasks.</li>\
-        <li><%= remaining %> remaining tasks.</li>\
-        </ul>\
-	';
-
     // MODELS
 
     window.Todo = Backbone.Model.extend({
@@ -108,7 +83,11 @@ $(function(){
 
     window.ListView = Backbone.View.extend({
         tagName: 'li',
-        template: _.template(app.templates.list),
+
+        // TODO: Update to include a count in the rendering.
+        template: _.template(
+            '<a data-id="<%= id %>" class="list editable-list"><%= text %></a>'
+        ),
 
         initialize: function() {
             this.model.bind('change', this.render, this);
@@ -153,7 +132,16 @@ $(function(){
 
         tagName: 'li',
 
-        template: _.template(app.templates.todo),
+        template: _.template(
+            '<div data-id="<%= id %>" class="todo <% if (done) { %> done <% } %>">\
+                <input type="checkbox" class="todo-check" <% if (done) { %> checked <% } %> />\
+                <div class="todo-content">\
+                    <span class="todo-label"><%= text %></span>\
+                    <input type="text" class="todo-input" value="<%= text %>" />\
+                </div>\
+                <a class="todo-destroy close" title="<% if (done) { %>Clear<% } else { %>Delete<% } %>"><% if (done) { %>&#x2713;<% } else { %>&#x2717;<% } %></a>\
+            </div>'
+        ),
 
         // Creation
 
@@ -225,7 +213,13 @@ $(function(){
 
         el: $('#todoapp'),
 
-        statsTemplate: _.template(app.templates.stats),
+        statsTemplate: _.template(
+            '<h3>Stats<% if (done > 0) { %><button class="todo-clear pull-right btn btn-success">Clear Completed</button><% } %></h3>\
+            <ul>\
+            <li><%= done %> completed tasks.</li>\
+            <li><%= remaining %> remaining tasks.</li>\
+            </ul>'
+        ),
 
         selectedListId: null,
 
@@ -344,24 +338,23 @@ $(function(){
         Todos.fetch();
     });
 
-    var listDroppableOptions = {
-        accept: '#todo-list li',
-        drop: onDrop,
-        hoverClass: "ui-state-active"
-    };
-
     function onDrop(event, ui) {
         var todoId = $(ui.draggable).children('.todo').data('id');
         var listId = $(this).data('id');
 
         var todo = Todos.get(todoId);
 
-        if (todo.get('list_id') != listId)
-        {
+        if (todo.get('list_id') != listId) {
             todo.save({ 'list_id': listId || null });
             Todos.remove(todo);
         }
     }
+
+    var listDroppableOptions = {
+        accept: '#todo-list li',
+        drop: onDrop,
+        hoverClass: "ui-state-active"
+    };
 
     $('#inbox-list .list').droppable(listDroppableOptions);
 
