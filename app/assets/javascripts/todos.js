@@ -84,27 +84,35 @@ $(function(){
     window.ListView = Backbone.View.extend({
         tagName: 'li',
 
+        // TODO: Add in-place editing.
+        // TODO: Add delete button on hover.
         // TODO: Update to include a count in the rendering.
         template: _.template(
-            '<a data-id="<%= id %>" class="list editable-list"><%= text %></a>'
+            '<a data-id="<%= id %>" class="list editable-list">\
+                <span class="list-label">\
+                    <span class="list-destroy close pull-right" title="Delete">&#x2717;</span>\
+                    <%= text %>\
+                </span>\
+                <input type="text" class="list-input" value="<%= text %>" />\
+            </a>'
         ),
 
         initialize: function() {
             this.model.bind('change', this.render, this);
             this.model.bind('destroy', this.remove, this);
-
-            // TODO: Add in-place editing to lists.
-            // TODO: Add hidden delete action to lists.
-            // TODO: Add modal confirmation for delete list.
         },
 
         events: {
-            'click .list'                 : 'switchLists'
+            'click .list'                 : 'switchLists',
+            'click .list-destroy'         : 'clear',
+            'dblclick .list'              : 'edit',
+            'keypress .list-input'        : 'updateOnEnter',
+            'blur .list-input'            : 'close'
         },
 
         render: function() {
             $(this.el).html(this.template(this.model.toJSON()));
-            $(this.el).children('a').droppable(listDroppableOptions);
+            $(this.el).children('.list').droppable(listDroppableOptions);
 
             return this;
         },
@@ -122,6 +130,32 @@ $(function(){
             Todos.fetch({ data: { list_id: listId } });
 
             App.selectedListId = listId || null;
+        },
+
+        clear: function() {
+            // Remove the list.
+            $(this.el).remove();
+
+            // Send them back to the inbox.
+            $('#inbox-list').click();
+
+            // Stop default behavior.
+            return false;
+        },
+
+        edit: function() {
+            this.$('.list').addClass('editing');
+            this.$('.list-input').focus();
+        },
+
+        updateOnEnter: function(e) {
+            if (e.keyCode == 13) this.close();
+        },
+
+        close: function() {
+            this.$('.list').removeClass('editing');
+
+            this.model.save({ text: this.$('.list-input').val() });
         }
 
     });
@@ -357,5 +391,9 @@ $(function(){
     };
 
     $('#inbox-list .list').droppable(listDroppableOptions);
+
+    $('#add-list').on('click', function() {
+        Lists.create({ order: Lists.length });
+    });
 
 });

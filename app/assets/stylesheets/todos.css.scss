@@ -116,12 +116,41 @@ $done-text: #468847;
 
 .list {
   cursor: pointer;
-}
 
-.list.ui-state-active {
-  background-color: darken($background, 5%);
+  .list-label {
+    display: inline-block;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 
-  &:before {
-    content: "→ ";
+  .list-input, .list-destroy { display: none; }
+
+  &.editing {
+    .list-label { display: none; }
+
+    .list-input {
+      display: inherit;
+      width: 100%;
+      margin: -2px 0 -2px -2px;
+      padding: 0;
+      height: 20px;
+    }
+  }
+
+  &:hover {
+    .list-destroy {
+      display: inherit;
+      color: #ff0000;
+    }
+  }
+
+  &.ui-state-active {
+    background-color: darken($background, 5%);
+
+    &:before {
+      content: "→ ";
+    }
   }
 }
