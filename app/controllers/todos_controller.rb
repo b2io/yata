@@ -4,7 +4,7 @@ class TodosController < ApplicationController
   # GET /todos
   # GET /todos.json
   def index
-    @todos = Todo.find_all_by_user_id(current_user.id)
+    @todos = Todo.find_all_by_user_id_and_list_id(current_user.id, params[:list])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,54 +14,54 @@ class TodosController < ApplicationController
 
   # GET /todos/1.json
   def show
-    @list = Todo.find(params[:id])
+    @todo = Todo.find(params[:id])
 
     respond_to do |format|
-      format.json { render json: @list }
+      format.json { render json: @todo }
     end
   end
 
   # GET /todos/new.json
   def new
-    @list = Todo.new
-    @list.user_id = current_user.id
+    @todo = Todo.new
+    @todo.user_id = current_user.id
 
     respond_to do |format|
-      format.json { render json: @list }
+      format.json { render json: @todo }
     end
   end
 
   # POST /todos.json
   def create
-    @list = Todo.new(params[:list])
-    @list.user_id = current_user.id
+    @todo = Todo.new(params[:list])
+    @todo.user_id = current_user.id
 
     respond_to do |format|
       if @list.save
-        format.json { render json: @list, status: :created, location: @list }
+        format.json { render json: @todo, status: :created, location: @todo }
       else
-        format.json { render json: @list.errors, status: :unprocessable_entity }
+        format.json { render json: @todo.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # PUT /todos/1.json
   def update
-    @list = Todo.find(params[:id])
+    @todo = Todo.find(params[:id])
 
     respond_to do |format|
       if @list.update_attributes(params[:list])
         format.json { head :no_content }
       else
-        format.json { render json: @list.errors, status: :unprocessable_entity }
+        format.json { render json: @todo.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # DELETE /todos/1.json
   def destroy
-    @list = Todo.find(params[:id])
-    @list.destroy
+    @todo = Todo.find(params[:id])
+    @todo.destroy
 
     respond_to do |format|
       format.json { head :no_content }

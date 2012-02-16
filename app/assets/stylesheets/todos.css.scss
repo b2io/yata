@@ -106,6 +106,14 @@ $done-text: #468847;
   background-color: lighten($background, 5%);
 }
 
-.todo-list {
-  @extend .todo;
+#lists {
+  padding: 8px 0;
+}
+
+.nav.nav-list > li.active:hover > a {
+  background-color: #08c;
+}
+
+.list {
+  cursor: pointer;
 }

@@ -32,11 +32,7 @@ $(function(){
 	    </div>\
 	';
 
-    app.templates.list = '\
-        <div data-id="<%= id %>" class="todo-list">\
-            <%= text %>\
-        </div>\
-    ';
+    app.templates.list = '<a data-id="<%= id %>" class="list"><%= text %></a>';
 
     app.templates.stats = '\
         <h3>Stats<% if (done > 0) { %><button class="todo-clear pull-right btn btn-success">Clear Completed</button><% } %></h3>\
@@ -119,6 +115,10 @@ $(function(){
           this.model.bind('destroy', this.remove, this);
         },
 
+        events: {
+          'click .list'                 : 'switchLists'
+        },
+
         render: function() {
             $(this.el).html(this.template(this.model.toJSON()));
 
@@ -127,7 +127,14 @@ $(function(){
 
         remove: function() {
             $(this.el).remove();
+        },
+
+        switchLists: function() {
+            var listId = $(this.el).children('a').data('id');
+
+            Todos.fetch({ data: { list: listId } })
         }
+
     });
 
     window.TodoView = Backbone.View.extend({
@@ -250,6 +257,7 @@ $(function(){
         },
 
         addAllTodos: function() {
+            this.$('#todo-list').html('');
             Todos.each(this.addOneTodo);
         },
 
@@ -309,25 +317,8 @@ $(function(){
         opacity: 0.75
     }).disableSelection();
 
+    $('#inbox-list').on('click', function() {
+       Todos.fetch();
+    });
+
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

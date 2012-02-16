@@ -3,7 +3,6 @@
 
 <div id="todoapp" class="row">
   <div class="span8">
-    <h2>TODOs</h2>
     <div id='create-todo'>
       <input id='new-todo' placeholder='What needs to be done?' type='text' class="span8" />
     </div>
@@ -12,9 +11,10 @@
     </div>
   </div>
   <div class="span4">
-    <div id='todo-stats'></div>
-    <div id="lists">
-      <ul id="list-list" class="unstyled"></ul>
+    <div id="lists" class="well" style="padding: 8px 0;">
+      <ul id="list-list" class="nav nav-list">
+        <li class="active"><a id="inbox-list" class="list"><i class="icon-inbox icon-white"></i> Inbox</a></li>
+      </ul>
     </div>
   </div>
 </div>
