@@ -84,8 +84,6 @@ $(function(){
     window.ListView = Backbone.View.extend({
         tagName: 'li',
 
-        // TODO: Add in-place editing.
-        // TODO: Add delete button on hover.
         // TODO: Update to include a count in the rendering.
         template: _.template(
             '<a data-id="<%= id %>" class="list editable-list">\
@@ -134,6 +132,8 @@ $(function(){
         },
 
         clear: function() {
+            // TODO: Implement modal confirmation behavior.
+
             // Remove the list.
             $(this.el).remove();
 
@@ -313,8 +313,6 @@ $(function(){
         },
 
         createOnEnter: function(e) {
-            // TODO: Update to set list_id properly.
-
             var text = this.input.val();
             if (!text || e.keyCode != 13) return;
             Todos.create({ text: text, list_id: this.selectedListId });
@@ -362,9 +360,6 @@ $(function(){
         opacity: 0.75
     }).disableSelection();
 
-
-    // TODO: Update to allow a todo to be dropped on a list.
-    // TODO: Add UI to create a new list.
 
     $('#inbox-list').on('click', function() {
         $('#list-list li.active').removeClass('active');
