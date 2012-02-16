@@ -125,11 +125,7 @@ $(function(){
 
         render: function() {
             $(this.el).html(this.template(this.model.toJSON()));
-            $(this.el).children('a').droppable({
-                accept: '#todo-list li',
-                drop: this.onDrop,
-                hoverClass: "ui-state-active"
-            });
+            $(this.el).children('a').droppable(listDroppableOptions);
 
             return this;
         },
@@ -145,17 +141,6 @@ $(function(){
             var listId = $(this.el).children('a').data('id');
 
             Todos.fetch({ data: { list_id: listId } })
-        },
-
-        onDrop: function(event, ui) {
-            var todoId = $(ui.draggable).children('.todo').data('id');
-            var listId = $(this).data('id');
-
-            var todo = Todos.get(todoId);
-            todo.save({ 'list_id': listId });
-            Todos.remove(todo);
-
-            return false;
         }
 
     });
@@ -339,15 +324,11 @@ $(function(){
     }).disableSelection();
 
     $('#list-list').sortable({
+        items: 'li:not(#inbox-list)',
         distance: 10,
         opacity: 0.75
     }).disableSelection();
 
-    $('.list a').droppable({
-        drop: function (event, ui) {
-
-        }
-    });
 
     // TODO: Update to allow a todo to be dropped on a list.
     // TODO: Add UI to create a new list.
@@ -358,5 +339,24 @@ $(function(){
 
         Todos.fetch();
     });
+
+    var listDroppableOptions = {
+        accept: '#todo-list li',
+        drop: onDrop,
+        hoverClass: "ui-state-active"
+    };
+
+    function onDrop(event, ui) {
+        var todoId = $(ui.draggable).children('.todo').data('id');
+        var listId = $(this).data('id');
+
+        var todo = Todos.get(todoId);
+        todo.save({ 'list_id': listId || null });
+        Todos.remove(todo);
+
+        return false;
+    }
+
+    $('#inbox-list .list').droppable(listDroppableOptions);
 
 });
