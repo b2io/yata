@@ -126,7 +126,7 @@ $(function(){
         render: function() {
             $(this.el).html(this.template(this.model.toJSON()));
             $(this.el).children('a').droppable({
-                accept: '.todo',
+                accept: '#todo-list li',
                 drop: this.onDrop,
                 hoverClass: "ui-state-active"
             });
