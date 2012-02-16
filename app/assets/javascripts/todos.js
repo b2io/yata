@@ -140,7 +140,9 @@ $(function(){
 
             var listId = $(this.el).children('a').data('id');
 
-            Todos.fetch({ data: { list_id: listId } })
+            Todos.fetch({ data: { list_id: listId } });
+
+            App.selectedListId = listId || null;
         }
 
     });
@@ -225,6 +227,8 @@ $(function(){
 
         statsTemplate: _.template(app.templates.stats),
 
+        selectedListId: null,
+
         // Creation
 
         initialize: function() {
@@ -284,7 +288,7 @@ $(function(){
 
             var text = this.input.val();
             if (!text || e.keyCode != 13) return;
-            Todos.create({ text: text });
+            Todos.create({ text: text, list_id: this.selectedListId });
             this.input.val('');
         },
 
