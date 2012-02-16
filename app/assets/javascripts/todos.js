@@ -32,7 +32,7 @@ $(function(){
 	    </div>\
 	';
 
-    app.templates.list = '<a data-id="<%= id %>" class="list"><%= text %></a>';
+    app.templates.list = '<a data-id="<%= id %>" class="list editable-list"><%= text %></a>';
 
     app.templates.stats = '\
         <h3>Stats<% if (done > 0) { %><button class="todo-clear pull-right btn btn-success">Clear Completed</button><% } %></h3>\
@@ -125,6 +125,11 @@ $(function(){
 
         render: function() {
             $(this.el).html(this.template(this.model.toJSON()));
+            $(this.el).children('a').droppable({
+                accept: '.todo',
+                drop: this.onDrop,
+                hoverClass: "ui-state-active"
+            });
 
             return this;
         },
@@ -135,13 +140,22 @@ $(function(){
 
         switchLists: function() {
             $('#list-list li').removeClass('active');
-            $('#list-list li i').removeClass('icon-white');
             $(this.el).addClass('active');
-            $('#list-list li.active a i').addClass('icon-white');
 
             var listId = $(this.el).children('a').data('id');
 
-            Todos.fetch({ data: { list: listId } })
+            Todos.fetch({ data: { list_id: listId } })
+        },
+
+        onDrop: function(event, ui) {
+            var todoId = $(ui.draggable).children('.todo').data('id');
+            var listId = $(this).data('id');
+
+            var todo = Todos.get(todoId);
+            todo.save({ 'list_id': listId });
+            Todos.remove(todo);
+
+            return false;
         }
 
     });
@@ -160,6 +174,7 @@ $(function(){
             // Listen for relevant changes on the model:
             this.model.bind('change', this.render, this);
             this.model.bind('destroy', this.remove, this);
+            this.model.bind('remove', this.remove, this);
         },
 
         events: {
@@ -302,7 +317,7 @@ $(function(){
         },
 
         updateListsAfterSort: function(event, ui) {
-            _.each(this.$('.list'), function(item, idx) {
+            _.each(this.$('.editable-list'), function(item, idx) {
                 Lists.get($(item).data('id')).save({ 'order': idx });
             });
         }
@@ -319,7 +334,8 @@ $(function(){
     $('#todo-list').sortable({
         distance: 10,
         placeholder: "dd-placeholder",
-        opacity: 0.75
+        opacity: 0.75,
+        revert: true
     }).disableSelection();
 
     $('#list-list').sortable({
@@ -327,13 +343,18 @@ $(function(){
         opacity: 0.75
     }).disableSelection();
 
+    $('.list a').droppable({
+        drop: function (event, ui) {
+
+        }
+    });
+
     // TODO: Update to allow a todo to be dropped on a list.
     // TODO: Add UI to create a new list.
 
     $('#inbox-list').on('click', function() {
         $('#list-list li').removeClass('active');
         $('#inbox-list').addClass('active');
-        $('#list-list li.active a i').addClass('icon-white');
 
         Todos.fetch();
     });
