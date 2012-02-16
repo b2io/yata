@@ -122,10 +122,11 @@ $(function(){
         },
 
         switchLists: function() {
-            $('#list-list li').removeClass('active');
+            $('#list-list li.active').removeClass('active');
             $(this.el).addClass('active');
+            $('.list.editing').removeClass('editing');
 
-            var listId = $(this.el).children('a').data('id');
+            var listId = $(this.el).children('.list').data('id');
 
             Todos.fetch({ data: { list_id: listId } });
 
@@ -366,8 +367,9 @@ $(function(){
     // TODO: Add UI to create a new list.
 
     $('#inbox-list').on('click', function() {
-        $('#list-list li').removeClass('active');
+        $('#list-list li.active').removeClass('active');
         $('#inbox-list').addClass('active');
+        $('.list.editing').removeClass('editing');
 
         Todos.fetch();
     });
