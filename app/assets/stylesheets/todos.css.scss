@@ -149,7 +149,7 @@ $done-text: #468847;
   &.ui-state-active {
     background-color: darken($background, 5%);
 
-    &:before {
+    .list-label:before {
       content: "→ ";
     }
   }
