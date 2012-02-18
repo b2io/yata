@@ -1,0 +1,9 @@
+paths:
+  'order': 'require/order'
+  'text': 'require/text'
+  'jquery': 'jquery'
+  'jquery-ujs': 'jquery-ujs'
+  'bootstrap': 'bootstrap/2.0.1/bootstrap'
+  'underscore': 'underscore/1.3.1-amdjs/underscore'
+  'backbone': 'backbone/0.9.1-amdjs/backbone'
+  'json2': 'json2/json2'

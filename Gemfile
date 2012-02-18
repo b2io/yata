@@ -7,6 +7,7 @@ gem 'omniauth-facebook'
 gem 'jquery-rails'
 gem 'rails-backbone'
 gem 'simple_form', '~> 2.0.0.rc'
+gem 'requirejs-rails'
 
 group :development do
 end
