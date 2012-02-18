@@ -10,7 +10,7 @@ class Authorization < ActiveRecord::Base
   end
 
   def self.create_from_hash(hash, user = nil)
-    user ||= User.create_from_hash!(hash)
+    user ||= User.default(User.create_from_hash!(hash))
     Authorization.create(user: user, uid: hash['uid'].to_s, provider: hash['provider'].to_s, email: hash['info']['email'].to_s)
   end
 end

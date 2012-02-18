@@ -4,7 +4,12 @@
 
 Yata.Models.List = Backbone.Model.extend({
     defaults: function() {
-        return {};
+        return {
+            id: null,
+            text: 'New List',
+            order: Lists.length,
+            count: 0
+        };
     }
 });
 

@@ -4,7 +4,10 @@
 
 Yata.Models.Todo = Backbone.Model.extend({
     defaults: function() {
-        return {};
+        return {
+            id: null,
+            done: false
+        };
     },
 
     toggle: function() {

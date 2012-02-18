@@ -6,7 +6,7 @@ class ListsController < ApplicationController
     @lists = List.find_all_by_user_id(current_user.id)
 
     respond_to do |format|
-      format.json { render json: @lists }
+      format.json { render json: @lists.to_json }
     end
   end
 
@@ -65,4 +65,5 @@ class ListsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
 end

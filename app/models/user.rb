@@ -12,4 +12,10 @@ class User < ActiveRecord::Base
       user.email = hash['info']['email'].to_s
     end
   end
+
+  def self.default(user)
+    user.lists.build text: 'Inbox', order: 0
+    user.save
+    user
+  end
 end

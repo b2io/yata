@@ -5,6 +5,7 @@
 //= require backbone
 //= require yata/yata
 //= require yata/views/todos/todo_view
+//= require yata/views/todos/inbox_list_view
 //= require yata/views/todos/list_view
 
 Yata.Views.Todos = Yata.Views.Todos || {};
@@ -29,7 +30,7 @@ Yata.Views.Todos.Index = Backbone.View.extend({
         this.state = {};
         this.input = this.$('#new-todo');
 
-        // TODO: Convert the global calls to local properties with a 'new'.
+        // TODO: Get rid of all selectedListId refs that aren't on window.State.
 
         // Ensure all methods of this object are called with correct scope.
         _.bindAll(this);
@@ -59,8 +60,6 @@ Yata.Views.Todos.Index = Backbone.View.extend({
             distance: 10,
             opacity: 0.75
         }).disableSelection();
-
-        //$('#inbox-list .list').droppable(listDroppableOptions);
     },
 
     events: {
@@ -92,18 +91,19 @@ Yata.Views.Todos.Index = Backbone.View.extend({
     },
 
     addOneList: function(list) {
-        var view = new Yata.Views.Todos.ListView({ model: list, state: this.state });
+        var view = (list.get('order') != 0) ? new Yata.Views.Todos.ListView({ model: list, state: this.state }) : new Yata.Views.Todos.InboxListView({ model: list, state: this.state });
         this.$('#list-list').append(view.render().el);
     },
 
     addAllLists: function() {
+        this.$('#list-list').html('');
         Lists.each(this.addOneList);
     },
 
     createOnEnter: function(e) {
         var text = this.input.val();
         if (!text || e.keyCode != 13) return;
-        Todos.create({ text: text, list_id: this.selectedListId });
+        Todos.create({ text: text, list_id: State.selectedListId });
         this.input.val('');
     },
 
@@ -113,9 +113,7 @@ Yata.Views.Todos.Index = Backbone.View.extend({
     },
 
     updateTodosAfterSort: function(event, ui) {
-        // Go through each of the todos in the list.
         _.each(this.$('.todo'), function(item, idx) {
-            // Get the related todo (using the 'data-id' as a key) and update its order.
             Todos.get($(item).data('id')).save({ 'order': idx });
         });
     },
@@ -127,7 +125,8 @@ Yata.Views.Todos.Index = Backbone.View.extend({
     },
 
     addNewList: function () {
-        Lists.create({ order: Lists.length });
+        Lists.create();
+        // TODO: Trigger edit behavior and focus on the new list.
     }
 
 });

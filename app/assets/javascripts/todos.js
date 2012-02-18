@@ -11,6 +11,7 @@
 //= require yata/routers/todos_router
 
 $(function() {
+    window.State = { selectedListId: null };
     window.Dispatcher = _.extend({}, Backbone.Events);
     window.Todos = new Yata.Collections.Todos();
     window.Lists = new Yata.Collections.Lists();

@@ -8,12 +8,17 @@ Yata.Views.Todos = Yata.Views.Todos || {};
 
 Yata.Views.Todos.ListView = Backbone.View.extend({
 
-    state: null,
     tagName: 'li',
     template: JST["yata/templates/todos/list"],
 
     initialize: function(options) {
         this.state = options.state;
+
+        this.dropOptions = {
+            accept: '#todo-list li',
+            drop: this.onDrop,
+            hoverClass: 'ui-state-active'
+        };
 
         // Ensure all methods of this object are called with correct scope.
         _.bindAll(this);
@@ -32,8 +37,7 @@ Yata.Views.Todos.ListView = Backbone.View.extend({
 
     render: function() {
         $(this.el).html(this.template(this.model.toJSON()));
-
-        //$(this.el).children('.list').droppable(listDroppableOptions);
+        $(this.el).children('.list').droppable(this.dropOptions);
 
         return this;
     },
@@ -51,7 +55,7 @@ Yata.Views.Todos.ListView = Backbone.View.extend({
 
         Todos.fetch({ data: { list_id: listId } });
 
-        this.state.selectedListId = listId || null;
+        State.selectedListId = listId || null;
     },
 
     clear: function() {
@@ -79,6 +83,22 @@ Yata.Views.Todos.ListView = Backbone.View.extend({
     close: function() {
         this.$('.list').removeClass('editing');
         this.model.save({ text: this.$('.list-input').val() });
+    },
+
+    onDrop: function (event, ui) {
+        var todoId = $(ui.draggable).children('.todo').data('id');
+        var listId = $(this).data('id');
+
+        var todo = Todos.get(todoId);
+
+        if (todo.get('list_id') != listId) {
+            todo.save({ 'list_id': listId || null });
+            Todos.remove(todo);
+
+            // Update the two lists in question.
+            Lists.get(State.selectedListId).fetch();
+            Lists.get(listId).fetch();
+        }
     }
 
 });
