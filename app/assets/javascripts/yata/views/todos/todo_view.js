@@ -19,6 +19,8 @@ Yata.Views.Todos.TodoView = Backbone.View.extend({
     initialize: function(options) {
         this.state = options.state;
 
+        // TODO: Update the count of the list after deleting a todo.
+
         // Ensure all methods of this object are called with correct scope.
         _.bindAll(this);
 

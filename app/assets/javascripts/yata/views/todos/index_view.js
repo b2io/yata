@@ -31,6 +31,8 @@ Yata.Views.Todos.Index = Backbone.View.extend({
         this.input = this.$('#new-todo');
 
         // TODO: Get rid of all selectedListId refs that aren't on window.State.
+        // TODO: Update the count of the list when adding a todo.
+        // TODO: Update the count of the list after clearing the completed todos.
 
         // Ensure all methods of this object are called with correct scope.
         _.bindAll(this);
