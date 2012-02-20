@@ -23,6 +23,8 @@
 //= require models/list
 //= require collections/lists
 //= require views/todos/index
-//= require views/todos/list
-//= require views/todos/inbox_list
+//= require views/todos/todos/todos
+//= require views/todos/lists/lists
+//= require views/todos/lists/list
+//= require views/todos/lists/inbox_list
 //= require routers/todos_router

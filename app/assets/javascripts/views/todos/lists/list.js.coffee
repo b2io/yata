@@ -1,8 +1,8 @@
-Yata.Views.Todos ?= {};
+Yata.Views.Todos.Lists ?= {}
 
-class Yata.Views.Todos.List extends Backbone.View
+class Yata.Views.Todos.Lists.ListView extends Backbone.View
   tagName: 'li'
-  template: JST["todos/list"]
+  template: JST["todos/lists/list"]
 
   listComponent: null
   clearButton: null

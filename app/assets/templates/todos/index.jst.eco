@@ -1,14 +1,2 @@
-<div class="span8">
-  <div id='create-todo'>
-    <input id='new-todo' placeholder='What needs to be done?' type='text' class="span8" />
-  </div>
-  <div id='todos'>
-    <ul id='todo-list' class="unstyled"></ul>
-  </div>
-</div>
-<div class="span4">
-  <div id="lists" class="well" style="padding: 8px 0;">
-    <ul id="list-list" class="nav nav-list"></ul>
-  </div>
-  <a id="add-list" class="btn btn-info btn-small pull-right">Add List</a>
-</div>
+<div id="todos-container" class="span8"></div>
+<div id="lists-container" class="span4"></div>

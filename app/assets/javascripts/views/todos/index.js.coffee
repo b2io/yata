@@ -3,26 +3,14 @@ Yata.Views.Todos ?= {};
 class Yata.Views.Todos.Index extends Backbone.View
   template: JST['todos/index']
 
-  events:
-    'click #add-list': 'addNewList'
-
   initialize: ->
-    @collection.on('reset', @render)
-    @collection.on('add', @appendList)
-    Dispatcher.on('lists:selectionChanged', @listSelectionChangedHandler)
+    @todosView = new Yata.Views.Todos.Todos.TodosView()
+    @listsView = new Yata.Views.Todos.Lists.ListsView()
 
   render: =>
     @$el.html(@template())
-    @collection.each(@appendList)
+
+    @$('#todos-container').html(@todosView.render().el)
+    @$('#lists-container').html(@listsView.render().el)
+
     this
-
-  appendList: (list, index) =>
-    ListKlass = if index == 0 then Yata.Views.Todos.InboxList else Yata.Views.Todos.List
-    listView = new ListKlass(model: list)
-    @$('#list-list').append(listView.render().el)
-
-  addNewList: =>
-    @collection.create({ order: @collection.last().get('order') + 1, wait: true })
-
-  listSelectionChangedHandler: (list) =>
-    alert(list.get('todos'))
