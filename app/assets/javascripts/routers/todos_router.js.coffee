@@ -1,5 +1,4 @@
 class Yata.Routers.TodosRouter extends Backbone.Router
-
   routes:
     "": "index"
 

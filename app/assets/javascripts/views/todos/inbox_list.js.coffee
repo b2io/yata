@@ -7,6 +7,6 @@ class Yata.Views.Todos.InboxList extends Yata.Views.Todos.List
    'click .list': 'switchLists'
 
   initialize: ->
-    $(@el).attr('id', 'inbox-list')
-    $(@el).addClass('active')
+    @$el.attr('id', 'inbox-list')
+    @$el.addClass('active')
     super

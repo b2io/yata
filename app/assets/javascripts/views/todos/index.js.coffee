@@ -12,7 +12,7 @@ class Yata.Views.Todos.Index extends Backbone.View
     Dispatcher.on('lists:selectionChanged', @listSelectionChangedHandler)
 
   render: =>
-    $(@el).html(@template())
+    @$el.html(@template())
     @collection.each(@appendList)
     this
 
