@@ -21,7 +21,7 @@ class Yata.Views.Todos.List extends Backbone.View
     'blur .list-input': 'close'
 
   render: =>
-    $(@el).html(@template(list: @model))
+    @$el.html(@template(list: @model))
 
     @listComponent = @$('.list')
     @clearButton = @$('.list-destroy')
@@ -36,12 +36,10 @@ class Yata.Views.Todos.List extends Backbone.View
   switchLists: (event) =>
     if not $(@el).hasClass('active')
       $('#list-list li.active').removeClass('active')
-      $(@el).addClass('active')
+      @$el.addClass('active')
       $('#list-list .list.editing').removeClass('editing')
-
       listId = @listComponent.data('id')
-
-      # TODO: Get associated todos for that list.
+      Dispatcher.trigger('lists:selectionChanged', @model)
 
   # TODO: Implement modal confirmation.
   clear: (event) =>
