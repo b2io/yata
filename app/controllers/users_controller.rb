@@ -1,6 +1,4 @@
 class UsersController < ApplicationController
-  before_filter :authorize
-
   def profile
     @user = current_user
   end

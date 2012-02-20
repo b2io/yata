@@ -1,0 +1,7 @@
+<a data-id="<%= @list.get('id') %>" class="list editable-list">
+    <span class="list-label">
+        <span class="list-destroy close pull-right" title="Delete">&#x2717;</span>
+        <%= @list.get('text') %> (<%= @list.get('todos').length %>)
+    </span>
+    <input type="text" class="list-input" value="<%= @list.get('text') %>" />
+</a>

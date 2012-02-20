@@ -1,6 +1,12 @@
 class SessionsController < ApplicationController
+  skip_before_filter :authorize, only: [ :new, :create, :failure ]
+
   def new
-    redirect_to todo_path if current_user
+    if current_user
+      redirect_to "/todos"
+    else
+      redirect_to "/"
+    end
   end
 
   def create
@@ -42,7 +48,7 @@ class SessionsController < ApplicationController
       self.current_user = @auth.user
 
       # Send the user to the 'todos' page.
-      redirect_to todo_path, flash: { success: "Signed in!" }
+      redirect_to todos_path, flash: { success: "Signed in!" }
 
     end
   end

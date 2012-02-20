@@ -5,9 +5,10 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 gem 'jquery-rails'
-gem 'rails-backbone'
+gem 'backbone-on-rails'
 gem 'simple_form', '~> 2.0.0.rc'
-gem 'requirejs-rails'
+gem 'rabl'
+gem 'gon'
 
 group :development do
 end

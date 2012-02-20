@@ -1,5 +1,4 @@
 class AuthorizationsController < ApplicationController
-  before_filter :authorize
 
   def destroy
     @authorization = Authorization.find(params[:id])
