@@ -1,8 +1,0 @@
-<div data-id="<%= id %>" class="todo <% if (done) { %> done <% } %>">
-    <input type="checkbox" class="todo-check" <% if (done) { %> checked <% } %> />
-    <div class="todo-content">
-        <span class="todo-label"><%= text %></span>
-        <input type="text" class="todo-input" value="<%= text %>" />
-    </div>
-    <a class="todo-destroy close" title="<% if (done) { %>Clear<% } else { %>Delete<% } %>"><% if (done) { %>&#x2713;<% } else { %>&#x2717;<% } %></a>
-</div>

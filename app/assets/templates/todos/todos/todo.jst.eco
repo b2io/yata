@@ -1,0 +1,8 @@
+<div data-id="2" class="todo">
+  <input type="checkbox" class="todo-check" />
+  <div class="todo-content">
+    <span class="todo-label">ZOMG</span>
+    <input type="text" class="todo-input" value="ZOMG" />
+  </div>
+  <a class="todo-destroy close" title="Delete">&#x2717;</a>
+</div> 

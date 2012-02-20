@@ -20,10 +20,13 @@
 //= require backbone-relational/0.5.0/backbone-relational
 //= require yata
 //= require_tree ../templates/todos
+//= require models/todo
 //= require models/list
+//= require collections/todos
 //= require collections/lists
 //= require views/todos/index
 //= require views/todos/todos/todos
+//= require views/todos/todos/todo
 //= require views/todos/lists/lists
 //= require views/todos/lists/list
 //= require views/todos/lists/inbox_list

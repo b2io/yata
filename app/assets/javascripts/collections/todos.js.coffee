@@ -1,3 +1,8 @@
+class Yata.Collections.Todos extends Backbone.Collection
+  model: Yata.Models.Todo
+  url: '/api/todos'
+
+###
 TodosApp.Collections.Todos = Backbone.Collection.extend({
 
     model: TodosApp.Models.Todo,

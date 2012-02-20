@@ -1,3 +1,14 @@
+Yata.Views.Todos.Todos ?= {}
+
+class Yata.Views.Todos.Todos.TodoView extends Backbone.View
+  tagName: 'li'
+  template: JST['todos/todos/todo']
+
+  render: =>
+    @$el.html(@template(@model))
+    this
+
+###
 TodosApp.Views.Todos = TodosApp.Views.Todos || {};
 
 TodosApp.Views.Todos.TodoView = Backbone.View.extend({
