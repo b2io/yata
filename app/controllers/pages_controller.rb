@@ -8,6 +8,7 @@ class PagesController < ApplicationController
   def todos
     @lists = List.find_all_by_user_id(current_user.id)
     gon.rabl 'app/views/lists/index.json.rabl', as: 'lists'
+    gon.user_id = current_user.id
   end
 
   def profile
