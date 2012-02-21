@@ -15,6 +15,10 @@ class Yata.Views.Todos.Todos.TodoView extends Backbone.View
     'blur .todo-input': 'close'
 
   initialize: ->
+    # Set the ID of the element for jQuery-UI's sortable serialize behavior.
+    @$el.attr('id', "todo_#{@model.get('id')}")
+
+    # Listen for relevant changes on the model.
     @model.on('change', @render)
     @model.on('destroy remove', @remove)
 

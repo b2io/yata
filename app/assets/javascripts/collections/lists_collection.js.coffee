@@ -2,8 +2,17 @@ class Yata.Collections.Lists extends Backbone.Collection
   model: Yata.Models.List,
   url: '/api/lists',
 
-  nextOrder: =>
-    @last().get('order') + 1
-
   comparator: (list) ->
-    list.get('order')
+    list.get('position')
+
+  nextPosition: =>
+    @last().get('position') + 1
+
+  sortByUI: (ui) =>
+    # Update the items on the server.
+    serialized = ui.sortable('serialize')
+    $.post(Proxy.get('sortListsURL'), serialized)
+
+    # Update the items on the client.
+    idsInOrder = _.map(serialized.split("&"), (entry) -> entry.match(/\d+/)[0])
+    _.each(idsInOrder, (id, idx) => @get(id).set('position', idx + 1))

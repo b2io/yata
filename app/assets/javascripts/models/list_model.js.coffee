@@ -1,6 +1,4 @@
-class Yata.Models.List extends Backbone.RelationalModel
-  # TODO: Setup relationship between todos and lists.
-
+class Yata.Models.List extends Backbone.Model
   todos: null
 
   defaults: ->

@@ -1,6 +1,5 @@
 Yata.Views.Todos.Todos ?= {}
 
-# TODO: Make todos inline-editable.
 # TODO: Make todos sortable and draggable.
 class Yata.Views.Todos.Todos.TodosView extends Backbone.View
   template: JST['todos/todos/todos']
@@ -13,7 +12,7 @@ class Yata.Views.Todos.Todos.TodosView extends Backbone.View
   events:
     'keypress #new-todo': 'createOnEnter'
     'click .todo-clear': 'clearCompleted'
-    'sortupdate #todo-list': 'updateTodosAfterSort'
+    'sortupdate #todo-list': 'updateAfterSort'
 
   initialize: ->
     Proxy.on('change:selectedList', @proxy_selectedListChangeHandler)
@@ -28,6 +27,7 @@ class Yata.Views.Todos.Todos.TodosView extends Backbone.View
 
     # Turn on sorting for the todos.
     @todoList.sortable(
+      axix: 'y'
       distance: 10
       placeholder: "dd-placeholder"
       opacity: 0.75
@@ -60,5 +60,5 @@ class Yata.Views.Todos.Todos.TodosView extends Backbone.View
   clearCompleted: =>
     this
 
-  updateTodosAfterSort: =>
-    this
+  updateAfterSort: (event, ui) =>
+    @list.todos.sortByUI(@todoList)

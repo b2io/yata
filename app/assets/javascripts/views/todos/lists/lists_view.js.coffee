@@ -10,6 +10,7 @@ class Yata.Views.Todos.Lists.ListsView extends Backbone.View
 
   events:
     'click #add-list': 'addNewList'
+    'sortupdate #list-list': 'updateAfterSort'
 
   initialize: ->
     @lists = Proxy.get('lists')
@@ -41,4 +42,7 @@ class Yata.Views.Todos.Lists.ListsView extends Backbone.View
     @listList.append(listView.render().el)
 
   addNewList: =>
-    @collection.create({ order: @collection.last().get('order') + 1, wait: true })
+    @lists.create({ order: @lists.nextPosition(), wait: true })
+
+  updateAfterSort: (event, ui) =>
+    @lists.sortByUI(@listList)

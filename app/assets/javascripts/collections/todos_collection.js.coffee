@@ -2,30 +2,17 @@ class Yata.Collections.Todos extends Backbone.Collection
   model: Yata.Models.Todo
   url: '/api/todos'
 
-###
-TodosApp.Collections.Todos = Backbone.Collection.extend({
+  comparator: (todo) ->
+    todo.get('position')
 
-    model: TodosApp.Models.Todo,
-    url: '/todos/',
+  nextPosition: =>
+    @last().get('position') + 1
 
-    // Get the list of todos that are completed.
-    done: function() {
-        return this.filter(function(todo){ return todo.get('done'); });
-    },
+  sortByUI: (ui) =>
+    # Update the items on the server.
+    serialized = ui.sortable('serialize')
+    $.post(Proxy.get('sortTodosURL'), serialized)
 
-    // Get the list of todos yet to be completed.
-    remaining: function() {
-        return this.without.apply(this, this.done());
-    },
-
-    // Get the next viable 'order' for the todo.
-    nextOrder: function() {
-        return this.length;
-    },
-
-    // Define a way to compare todos.
-    comparator: function(todo) {
-        return todo.get('order');
-    }
-
-});
+    # Update the items on the client.
+    idsInOrder = _.map(serialized.split("&"), (entry) -> entry.match(/\d+/)[0])
+    _.each(idsInOrder, (id, idx) => @get(id).set('position', idx + 1))

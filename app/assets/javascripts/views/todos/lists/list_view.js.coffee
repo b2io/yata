@@ -10,6 +10,10 @@ class Yata.Views.Todos.Lists.ListView extends Backbone.View
   listInput: null
 
   initialize: ->
+    # Set the ID of the element for jQuery-UI's sortable serialize behavior.
+    @$el.attr('id', "list_#{@model.get('id')}")
+
+    # Listen for relevant changes on the model.
     @model.on('change', @render)
     @model.on('destroy', @remove)
 

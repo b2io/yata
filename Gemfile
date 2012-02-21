@@ -9,6 +9,7 @@ gem 'backbone-on-rails'
 gem 'simple_form', '~> 2.0.0.rc'
 gem 'rabl'
 gem 'gon'
+gem 'acts_as_list'
 
 group :development do
 end

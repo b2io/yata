@@ -1,7 +1,11 @@
 Yata::Application.routes.draw do
   scope "api" do
-    resources :lists
-    resources :todos
+    resources :lists do
+      collection { post :sort }
+    end
+    resources :todos do
+      collection { post :sort }
+    end
     resources :authorizations
     resources :users
   end

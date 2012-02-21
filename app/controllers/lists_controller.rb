@@ -26,4 +26,11 @@ class ListsController < ApplicationController
     respond_with List.destroy(params[:id])
   end
 
+  def sort
+    params[:list].each_with_index do |id, idx|
+      List.update_all({ position: idx + 1 }, { id: id })
+    end
+    render nothing: true
+  end
+
 end

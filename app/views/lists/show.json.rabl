@@ -1,6 +1,6 @@
 object @list
-attributes :id, :order, :text
+attributes :id, :position, :text
 
 child :todos do
-  attributes :id, :order, :text, :done, :list_id
+  attributes :id, :position, :text, :done, :list_id
 end
