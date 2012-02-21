@@ -10,9 +10,7 @@ class Yata.Views.Todos.Todos.TodosView extends Backbone.View
 
   render: =>
     @$el.html(@template())
-
     @todoList = @$('#todo-list')
-
     this
 
   renderTodo: (todo) =>
