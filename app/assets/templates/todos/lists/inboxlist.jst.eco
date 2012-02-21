@@ -1,0 +1,1 @@
+<a data-id="<%= @list.get('id') %>" class="list"><i class="icon-inbox"></i> Inbox (<%= @count %>)</a>

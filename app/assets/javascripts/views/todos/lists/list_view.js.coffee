@@ -26,7 +26,7 @@ class Yata.Views.Todos.Lists.ListView extends Backbone.View
     'blur .list-input': 'close'
 
   render: =>
-    @$el.html(@template(list: @model))
+    @$el.html(@template(list: @model, count: @model.todos.length))
 
     @listComponent = @$('.list')
     @clearButton = @$('.list-destroy')
