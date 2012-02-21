@@ -1,4 +1,4 @@
-<div class="todo <%= "done" if @todo.get('done') %>">
+<div class="todo<%= " done" if @todo.get('done') %>">
   <input type="checkbox" class="todo-check" <%= "checked" if @todo.get('done') %> />
   <div class="todo-content">
     <span class="todo-label"><%= @todo.get('text') %></span>

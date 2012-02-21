@@ -43,7 +43,7 @@ class Yata.Views.Todos.Lists.ListsView extends Backbone.View
     @listList.append(listView.render().el)
 
   addNewList: =>
-    @lists.create({ wait: true })
+    @lists.create({},{ wait: true })
 
   updateAfterSort: (event, ui) =>
     @lists.sortByUI(@listList)

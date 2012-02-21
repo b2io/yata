@@ -1,4 +1,4 @@
-<a data-id="<%= @list.get('id') %>" class="list editable-list">
+<a class="list editable-list">
     <span class="list-label">
         <span class="list-destroy close pull-right" title="Delete">&#x2717;</span>
         <%= @list.get('text') %> (<%= @count %>)

@@ -33,6 +33,11 @@ class Yata.Views.Todos.Lists.ListView extends Backbone.View
     @listLabel = @$('.list-label')
     @listInput = @$('.list-input')
 
+    @listComponent.droppable
+      accept: '#todo-list li'
+      hoverClass: 'ui-state-active'
+      drop: @dropHandler
+
     this
 
   remove: =>
@@ -63,3 +68,18 @@ class Yata.Views.Todos.Lists.ListView extends Backbone.View
     if @listComponent.hasClass('editing')
       @listComponent.removeClass('editing')
       @model.save(text: @listInput.val()) if @listInput.val() != @model.get('text')
+
+  # TODO: This can almost certainly be refactored to be more clean.
+  dropHandler: (event, ui) =>
+    if !@$el.hasClass('active')
+      # Pull the ID off the DOM.
+      todoId = $(ui.draggable).attr('id').match(/\d+/)[0]
+
+      # Move the todo from the old list to the list and update the server.
+      host = Proxy.get('selectedList').todos
+      todo = host.get(todoId)
+      host.remove(todo)
+      todo.set(list_id: @model.get('id'), position: @model.todos.length + 1)
+      @model.todos.add(todo)
+      todo.save()
+
