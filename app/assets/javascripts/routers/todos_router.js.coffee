@@ -1,6 +1,6 @@
 class Yata.Routers.TodosRouter extends Backbone.Router
   routes:
-    "": "index"
+    "*path": "index"
 
   index: ->
     indexView = new Yata.Views.Todos.Index()
