@@ -27,8 +27,6 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    # TODO: Validate that the user is attempting to delete their own account.
-
     @user = User.find(params[:id])
     @user.destroy
 

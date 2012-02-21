@@ -1,6 +1,6 @@
 Yata.Views.Todos.Todos ?= {}
 
-# TODO: Make todos sortable and draggable.
+# TODO: Make todos draggable.
 class Yata.Views.Todos.Todos.TodosView extends Backbone.View
   template: JST['todos/todos/todos']
 

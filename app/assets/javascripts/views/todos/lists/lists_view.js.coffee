@@ -1,6 +1,6 @@
 Yata.Views.Todos.Lists ?= {}
 
-# TODO: Make lists sortable and droppable.
+# TODO: Make lists droppable.
 class Yata.Views.Todos.Lists.ListsView extends Backbone.View
   template: JST['todos/lists/lists']
 
