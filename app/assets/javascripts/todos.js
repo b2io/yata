@@ -17,7 +17,6 @@
 //= require json2/json2
 //= require underscore
 //= require backbone
-//= require backbone-relational/0.5.0/backbone-relational
 //= require yata
 //= require_tree ../templates/todos
 //= require models/todo_model
