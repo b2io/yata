@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   end
 
   def self.default(user)
-    user.lists.build text: 'Inbox', order: 0
+    user.lists.build text: 'Inbox', position: 1
     user.save
     user
   end
