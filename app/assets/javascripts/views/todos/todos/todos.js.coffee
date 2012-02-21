@@ -6,7 +6,7 @@ class Yata.Views.Todos.Todos.TodosView extends Backbone.View
   todoList: null
 
   initialize: ->
-    Dispatcher.on('lists:selectionChanged', @lists_selectionChangedHandler)
+    Proxy.on('change:selectedList', @proxy_selectedListChangeHandler)
 
   render: =>
     @$el.html(@template())
@@ -19,6 +19,7 @@ class Yata.Views.Todos.Todos.TodosView extends Backbone.View
     todoView = new Yata.Views.Todos.Todos.TodoView(model: todo)
     @todoList.append(todoView.render().el)
 
-  lists_selectionChangedHandler: (list) =>
-    @todoList.html('')
-    list.todos.each(@renderTodo)
+  proxy_selectedListChangeHandler: (proxy, list) =>
+    if list?
+      @todoList.html('')
+      list.todos.each(@renderTodo)

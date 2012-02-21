@@ -9,7 +9,7 @@ class Yata.Views.Todos.Lists.ListsView extends Backbone.View
     'click #add-list': 'addNewList'
 
   initialize: ->
-    @lists = Proxy.lists
+    @lists = Proxy.get('lists')
     @lists.on('reset', @render)
     @lists.on('add', @appendList)
 

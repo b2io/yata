@@ -7,3 +7,6 @@ class Yata.Views.Todos.Lists.InboxListView extends Yata.Views.Todos.Lists.ListVi
 
   events:
    'click .list': 'switchLists'
+
+  initialize: ->
+    Proxy.set('selectedList', @model)

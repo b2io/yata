@@ -24,6 +24,7 @@
 //= require models/list
 //= require collections/todos
 //= require collections/lists
+//= require proxies/todos
 //= require views/todos/index
 //= require views/todos/todos/todos
 //= require views/todos/todos/todo

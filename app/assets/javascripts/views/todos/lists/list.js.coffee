@@ -39,7 +39,7 @@ class Yata.Views.Todos.Lists.ListView extends Backbone.View
       @$el.addClass('active')
       $('#list-list .list.editing').removeClass('editing')
       listId = @listComponent.data('id')
-      Dispatcher.trigger('lists:selectionChanged', @model)
+      Proxy.set('selectedList', @model)
 
   # TODO: Implement modal confirmation.
   clear: (event) =>
