@@ -4,9 +4,18 @@ class Yata.Views.Todos.Todos.TodoView extends Backbone.View
   tagName: 'li'
   template: JST['todos/todos/todo']
 
+  events:
+    'click .todo-check': 'toggleDone'
+
+  initialize: ->
+    @model.on('change', @render)
+
   render: =>
-    @$el.html(@template(@model))
+    @$el.html(@template(todo: @model))
     this
+
+  toggleDone: =>
+    @model.toggle()
 
 ###
 TodosApp.Views.Todos = TodosApp.Views.Todos || {};

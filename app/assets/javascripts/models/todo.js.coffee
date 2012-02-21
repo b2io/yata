@@ -3,18 +3,5 @@ class Yata.Models.Todo extends Backbone.Model
     id: null
     done: false
 
-###
-TodosApp.Models.Todo = Backbone.RelationalModel.extend({
-
-    defaults: function() {
-        return {
-            id: null,
-            done: false
-        };
-    },
-
-    toggle: function() {
-        this.save({ done: !this.get('done') });
-    }
-
-});
+  toggle: =>
+    @save(done: !@get('done'))
