@@ -5,9 +5,6 @@ class Yata.Collections.Todos extends Backbone.Collection
   comparator: (todo) ->
     todo.get('position')
 
-  nextPosition: =>
-    @last().get('position') + 1
-
   # TODO: Refactor this to a mixin.
   sortByUI: (ui) =>
     # Update the items on the server.

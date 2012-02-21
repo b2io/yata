@@ -29,7 +29,8 @@ class Yata.Views.Todos.Lists.ListsView extends Backbone.View
 
     # Turn on sorting for all but the inbox-list.
     @listList.sortable(
-      items: 'li:not(#inbox-list)'
+      axis: 'y'
+      items: 'li:not(.inbox-list)'
       distance: 10
       opacity: 0.75
     ).disableSelection()
@@ -42,7 +43,7 @@ class Yata.Views.Todos.Lists.ListsView extends Backbone.View
     @listList.append(listView.render().el)
 
   addNewList: =>
-    @lists.create({ order: @lists.nextPosition(), wait: true })
+    @lists.create({ wait: true })
 
   updateAfterSort: (event, ui) =>
     @lists.sortByUI(@listList)

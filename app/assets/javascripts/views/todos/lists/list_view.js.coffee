@@ -16,6 +16,7 @@ class Yata.Views.Todos.Lists.ListView extends Backbone.View
     # Listen for relevant changes on the model.
     @model.on('change', @render)
     @model.on('destroy', @remove)
+    @model.todos.on('add remove', @render)
 
   events:
     'click .list': 'switchLists'
@@ -48,7 +49,7 @@ class Yata.Views.Todos.Lists.ListView extends Backbone.View
   # TODO: Implement modal confirmation.
   clear: (event) =>
     @model.destroy()
-    $('#inbox-list .list').click()
+    $('.inbox-list .list').click()
     event.stopPropagation()
 
   edit: (event) =>

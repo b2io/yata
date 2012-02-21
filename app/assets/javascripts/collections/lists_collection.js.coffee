@@ -5,9 +5,6 @@ class Yata.Collections.Lists extends Backbone.Collection
   comparator: (list) ->
     list.get('position')
 
-  nextPosition: =>
-    @last().get('position') + 1
-
   # TODO: Refactor this to a mixin.
   sortByUI: (ui) =>
     # Update the items on the server.

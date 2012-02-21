@@ -1,8 +1,7 @@
 Yata.Views.Todos.Lists ?= {}
 
 class Yata.Views.Todos.Lists.InboxListView extends Yata.Views.Todos.Lists.ListView
-  id: 'inbox-list'
-  className: 'active'
+  className: 'active inbox-list'
   template: JST["todos/lists/inbox"]
 
   events:
@@ -10,3 +9,4 @@ class Yata.Views.Todos.Lists.InboxListView extends Yata.Views.Todos.Lists.ListVi
 
   initialize: ->
     Proxy.set('selectedList', @model)
+    super

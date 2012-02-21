@@ -54,7 +54,7 @@ class Yata.Views.Todos.Todos.TodosView extends Backbone.View
   createOnEnter: (event) =>
     text = @todoInput.val()
     if text and event.keyCode == 13
-      @list.todos.create(text: text, list_id: @list.get('id') )
+      @list.todos.create(text: text, list_id: @list.get('id'), wait: true)
       @todoInput.val('')
 
   clearCompleted: =>
