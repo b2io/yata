@@ -10,6 +10,8 @@ gem 'simple_form', '~> 2.0.0.rc'
 gem 'rabl', '~> 0.5.5.h'
 gem 'gon'
 gem 'acts_as_list'
+gem 'thin', '~> 1.3.1'
+gem 'eventmachine', '~> 1.0.0.beta.4.1'
 
 group :development do
 end
@@ -28,7 +30,6 @@ end
 
 group :production do
   gem 'pg'
-  gem 'thin'
 end
 
 group :assets do
