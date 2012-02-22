@@ -18,6 +18,4 @@ Yata::Application.routes.draw do
   match "/todos" => "pages#todos", as: "todos"
   match "/profile" => "pages#profile", as: "profile"
 
-  match "*path", to: "pages#index"
-
 end

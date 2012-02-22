@@ -49,7 +49,3 @@ Thread.main[:activerecord_connection] = ActiveRecord::Base.retrieve_connection
 def (ActiveRecord::Base).connection
   Thread.main[:activerecord_connection]
 end
-
-# This is how we load our support files for rspec, this keeps the size of
-# the spec_helper.rb file manageable.
-Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}

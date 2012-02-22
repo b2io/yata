@@ -17,13 +17,13 @@ end
 group :test do
   gem 'capybara'
   gem 'launchy', '~> 2.0.5'
-  gem 'rspec-rails', '2.8.1'
-  gem 'spork', '0.9.0.rc8'
+  gem 'rspec-rails'
+  gem 'spork'
   gem 'database_cleaner'
 end
 
 group :development, :test do
-  gem 'sqlite3', '1.3.5'
+  gem 'sqlite3'
 end
 
 group :production do
@@ -32,9 +32,9 @@ group :production do
 end
 
 group :assets do
-  gem 'sass-rails', '3.2.3'
-  gem 'coffee-rails', '3.2.2'
-  gem 'uglifier', '1.0.3'
+  gem 'sass-rails'
+  gem 'coffee-rails'
+  gem 'uglifier'
 end
 
 # Pull in the personal Gemfile if it exists.
