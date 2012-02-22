@@ -8,6 +8,7 @@ class Yata.Views.Todos.Lists.ListView extends Backbone.View
   clearButton: null
   listLabel: null
   listInput: null
+  confirmModal: null
 
   initialize: ->
     # Set the ID of the element for jQuery-UI's sortable serialize behavior.
@@ -32,6 +33,7 @@ class Yata.Views.Todos.Lists.ListView extends Backbone.View
     @clearButton = @$('.list-destroy')
     @listLabel = @$('.list-label')
     @listInput = @$('.list-input')
+    @confirmModal = $('#confirm-delete-list')
 
     @listComponent.droppable
       accept: '#todo-list li'
@@ -51,10 +53,30 @@ class Yata.Views.Todos.Lists.ListView extends Backbone.View
       listId = @listComponent.data('id')
       Proxy.set('selectedList', @model)
 
-  # TODO: Implement modal confirmation.
+  # TODO: Refactor into another view.
   clear: (event) =>
+    # Show the modal confirmation and listen for clicks from the user.
+    @confirmModal.modal('show')
+    $('.modal-close').on('click', @cancelDeleteList)
+    $('#delete-list-action').on('click', @confirmDeleteListAndTodos)
+
+  cancelDeleteList: =>
+    # Remove the listeners for the buttons.
+    $('.modal-close').off('click', @cancelDeleteList)
+    $('#delete-list-action').off('click', @confirmDeleteListAndTodos)
+
+    # Hide the modal.
+    @confirmModal.modal('hide')
+
+  confirmDeleteListAndTodos: =>
+    # Remove the listeners for the buttons.
+    $('.modal-close').off('click', @cancelDeleteList)
+    $('#delete-list-action').off('click', @confirmDeleteListAndTodos)
+
+    # Delete the list, select the inbox, and hide the modal.
     @model.destroy()
     $('.inbox-list .list').click()
+    @confirmModal.modal('hide')
     event.stopPropagation()
 
   edit: (event) =>
@@ -82,4 +104,3 @@ class Yata.Views.Todos.Lists.ListView extends Backbone.View
       todo.set(list_id: @model.get('id'), position: @model.todos.length + 1)
       @model.todos.add(todo)
       todo.save()
-
