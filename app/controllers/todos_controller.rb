@@ -27,5 +27,4 @@ class TodosController < ApplicationController
     end
     render nothing: true
   end
-  end
 end
