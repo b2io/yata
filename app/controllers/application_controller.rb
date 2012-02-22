@@ -19,10 +19,10 @@ class ApplicationController < ActionController::Base
     !!current_user
   end
 
-  helper_method :current_user, :signed_in?
-
   def current_user=(user)
     @current_user = user
     session[:user_id] = user.id
   end
+
+  helper_method :current_user, :signed_in?
 end

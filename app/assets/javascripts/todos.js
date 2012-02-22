@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require bootstrap/2.0.1/bootstrap
+//= require getsatisfaction/feedback-v2
 //= require json2/json2
 //= require underscore
 //= require backbone
