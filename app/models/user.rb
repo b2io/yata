@@ -1,16 +1,20 @@
 class User < ActiveRecord::Base
-  has_many :todos
+  has_many :authorizations, dependent: :delete_all
+  has_many :lists, dependent: :delete_all
 
-  def self.from_omniauth(auth)
-    find_by_provider_and_uid(auth["provider"].to_s, auth["uid"].to_s) || create_with_omniauth(auth)
+  validates :name, presence: true
+  validates :email, presence: true, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
+
+  def self.create_from_hash!(hash)
+    create! do |user|
+      user.name = hash['info']['name'].to_s
+      user.email = hash['info']['email'].to_s
+    end
   end
 
-  def self.create_with_omniauth(auth)
-    create! do |user|
-      user.provider = auth["provider"].to_s
-      user.uid = auth["uid"].to_s
-      user.email = auth["info"]["email"].to_s
-      user.name = auth["info"]["name"].to_s
-    end
+  def self.default(user)
+    user.lists.build text: 'Inbox', position: 1
+    user.save
+    user
   end
 end

@@ -1,0 +1,13 @@
+language: ruby
+
+branches:
+  only:
+    - 'master'
+
+rvm:
+  - 1.9.2
+
+before_install: "./script/ci/before_install.sh"
+bundle_args: "--without development production"
+before_script: "./script/ci/before.sh"
+script: "bundle exec rake ci:travis"

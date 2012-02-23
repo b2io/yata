@@ -3,7 +3,6 @@
 <head>
   <title><%= full_title(yield(:title)) %></title>
   <%= render "layouts/stylesheets" %>
-  <%= render "layouts/scripts" %>
   <%= render "layouts/icons" %>
   <%= csrf_meta_tags %>
   <%= yield(:head) %>
@@ -13,7 +12,7 @@
 <div class="container">
   <div class="content">
     <% flash.each do |name, msg| %>
-        <div data-alert class="alert fade in <%= name %>">
+        <div data-alert class="alert fade in alert-<%= name %>">
           <a class="close" data-dismiss="alert">&times;</a>
           <%= msg %>
         </div>
@@ -22,5 +21,8 @@
   </div>
 </div>
 <%= render "layouts/footer" %>
+<%= include_gon %>
+<%= render "layouts/scripts" %>
+<%= render "layouts/get_satisfaction" %>
 </body>
 </html>

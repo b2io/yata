@@ -12,4 +12,5 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap
+//= require bootstrap/2.0.1/bootstrap
+//= require getsatisfaction/feedback-v2

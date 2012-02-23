@@ -1,0 +1,1 @@
+<a data-id="<%= @list.escape('id') %>" class="list"><i class="icon-inbox"></i> Inbox (<%= @count %>)</a>

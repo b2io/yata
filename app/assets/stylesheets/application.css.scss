@@ -59,6 +59,8 @@ h2, h3 {
       padding: 11px 0;
 
       .avatar {
+        width: 24px;
+        height: 24px;
         border: 1px solid #999;
         float: left;
         margin: -4px 5px 0 0;
@@ -73,4 +75,8 @@ h2, h3 {
       border-color: #fff;
     }
   }
+}
+
+.dropdown-menu > li > a > [class^="icon-"] {
+  margin: 1px 4px 0 0;
 }

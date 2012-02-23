@@ -54,7 +54,7 @@ Yata::Application.configure do
   # Enable threaded mode
   # config.threadsafe!
 
-  config.assets.precompile += %w( todos.css todos.js backbone.js json2.js underscore.js bootstrap.css bootstrap.responsive.css bootstrap.js )
+  config.assets.precompile += %w( profile.js todos.css todos.js backbone.js json2.js underscore.js bootstrap.css bootstrap.responsive.css bootstrap.js )
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found)

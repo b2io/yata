@@ -1,0 +1,76 @@
+<%= provide(:scripts, "profile") %>
+
+<div class="row">
+  <div class="span8">
+    <h2>Profile</h2>
+    <div class="tabbable">
+      <div>
+        <a href="#confirm-delete-account" data-toggle="modal" class="btn btn-danger pull-right">Delete Account</a>
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#info" data-toggle="tab">General Information</a></li>
+          <li><a href="#accounts" data-toggle="tab">Linked Accounts</a></li>
+        </ul>
+      </div>
+      <div class="tab-content">
+        <!-- General Information -->
+        <div id="info" class="tab-pane active">
+          <%= simple_form_for @user, html: { class: "form-horizontal" } do |f| %>
+              <%= f.input :name, input_html: { class: "span6" } %>
+              <%= f.input :email, input_html: { class: "span6" } %>
+              <div class="form-actions">
+                <%= f.button :submit, class: "btn-primary" %>
+                <%= submit_tag "Cancel", type: :reset, class: "btn" %>
+              </div>
+          <% end %>
+        </div>
+        <!-- Linked Accounts -->
+        <div id="accounts" class="tab-pane">
+          <p>Here&rsquo;s a listing of all the logins currently linked to your YATA account. If you&rsquo;d like to link an additional login, click on the provider link below.</p>
+          <table id="linked-login-list" class="table table-striped table-condensed table-bordered">
+            <thead>
+            <tr>
+              <th>Provider</th>
+              <th>UID</th>
+              <th>Email</th>
+              <th>Created</th>
+              <% if @user.authorizations.length > 1 %>
+                  <th></th>
+              <% end %>
+            </tr>
+            </thead>
+            <tbody>
+            <% @user.authorizations.each do |auth| %>
+                <tr>
+                  <td><%= provider_name(auth) %></td>
+                  <td><%= auth.uid %></td>
+                  <td><%= auth.email %></td>
+                  <td><%= auth.created_at.to_formatted_s(:long_ordinal) %></td>
+                  <% if @user.authorizations.length > 1 %>
+                      <td>
+                        <%= link_to content_tag(:i, "", class: "icon-remove"), "#confirm-unlink", 'data-toggle' => "modal", 'data-unlink' => "#{auth.id}", title: "Unlink login" %>
+                      </td>
+                  <% end %>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+          <div>
+            <a href="/auth/google_oauth2" title="Link a Google login"><%= image_tag "google_64.png", size: "64x64", alt: "Google" %></a>
+            <a href="/auth/facebook" title="Link a Facebook login"><%= image_tag "facebook_64.png", size: "64x64", alt: "Facebook" %></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="span4">
+    <div class="thumbnail">
+      <%= image_tag get_avatar_url(current_user, size: 300), alt: @user.name %>
+      <div class="caption">
+        <p>Your avatar is provided by <%= link_to "gravatar.com", "http://www.gravatar.com" %> based on your email.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render "pages/confirm_delete_account" %>
+<%= render "pages/confirm_unlink" %>

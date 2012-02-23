@@ -1,5 +1,7 @@
 class Todo < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :list
+  acts_as_list scope: :list
 
-  validates :user_id, presence: true
+  validates :list_id, presence: true
+  validates :text, presence: true
 end
