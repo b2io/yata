@@ -15,5 +15,6 @@ class PagesController < ApplicationController
 
   def profile
     @user = current_user
+    gon.auth_path = authorizations_path;
   end
 end
