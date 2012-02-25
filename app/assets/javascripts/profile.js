@@ -45,7 +45,7 @@ $(function () {
     // Listen for clicks on links intended to delete linked-accounts:
     $('a[data-unlink]').on('click', function (e) {
         var el = $('#confirm-unlink a.btn-danger');
-        el.attr('href', "/authorizations/" + $(e.currentTarget).data('unlink'));
+        el.attr('href', gon.auth_path + "/" + $(e.currentTarget).data('unlink'));
     });
 
 });
