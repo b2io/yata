@@ -30,7 +30,7 @@ class Yata.Views.Todos.Todos.TodosView extends Backbone.View
       axix: 'y'
       distance: 10
       placeholder: "dd-placeholder"
-      opacity: 0.75
+      opacity: 0.25
     ).disableSelection();
 
     this
