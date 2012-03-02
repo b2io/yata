@@ -26,6 +26,7 @@
 //= require collections/lists_collection
 //= require proxies/todos_proxy
 //= require views/todos/index_view
+//= require views/todos/modal/info_modal
 //= require views/todos/todos/todos_view
 //= require views/todos/todos/todo_view
 //= require views/todos/lists/lists_view

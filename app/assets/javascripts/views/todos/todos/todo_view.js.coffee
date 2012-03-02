@@ -13,6 +13,7 @@ class Yata.Views.Todos.Todos.TodoView extends Backbone.View
     'dblclick .todo': 'edit'
     'keypress .todo-input': 'updateOnEnter'
     'blur .todo-input': 'close'
+    'click .icon-list' : 'list'
 
   initialize: ->
     # Set the ID of the element for jQuery-UI's sortable serialize behavior.
@@ -52,3 +53,8 @@ class Yata.Views.Todos.Todos.TodoView extends Backbone.View
     if @todo.hasClass('editing')
       @todo.removeClass('editing')
       @model.save(text: @todoInput.val()) if @todoInput.val() != @model.get('text')
+
+
+  list: =>
+    Dispatcher.trigger("info_modal_requested", @model)
+

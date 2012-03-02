@@ -4,5 +4,7 @@
     <span class="todo-label"><%= @todo.get('text') %></span>
     <input type="text" class="todo-input" value="<%= @todo.escape('text') %>" />
   </div>
+  <a class="icon-list todo-list-icon" />
   <a class="todo-destroy close" title="<%= if @todo.get('done') then "Clear" else "Delete" %>"><%- if @todo.get('done') then "&#x2713;" else "&#x2717;" %></a>
+
 </div>

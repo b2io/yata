@@ -17,6 +17,7 @@ class Yata.Views.Todos.Todos.TodosView extends Backbone.View
   initialize: ->
     Proxy.on('change:selectedList', @proxy_selectedListChangeHandler)
 
+
   render: =>
     # Render the overall template.
     @$el.html(@template())
@@ -62,3 +63,4 @@ class Yata.Views.Todos.Todos.TodosView extends Backbone.View
 
   updateAfterSort: (event, ui) =>
     @list.todos.sortByUI(@todoList)
+

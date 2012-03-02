@@ -60,12 +60,28 @@ $done-text: #468847;
     top: 6px;
   }
 
+  .todo-list-icon
+  {
+    display: none;
+    color: #ff0000;
+    opacity: .4;
+    position: absolute;
+    right: 28px;
+    top: 6px;
+  }
+
+  .todo-list-icon:hover
+  {
+    opacity: 1;
+  }
+
   &:hover {
     background: darken($background, 5%);
     border-color: darken($border, 5%);
     color: darken($text, 5%);
 
     .todo-destroy { display: inline; }
+    .todo-list-icon { display: inline; }
   }
 
   &.editing {
@@ -100,6 +116,26 @@ $done-text: #468847;
   }
 }
 
+.description-content
+{
+  .description-input
+  {
+   display: none;
+
+  }
+
+  &.editing {
+    .desc-label { display: none; }
+
+    .description-input {
+      display: inline;
+      width: 100%;
+    }
+  }
+
+}
+
+
 .dd-placeholder {
   @extend .todo;
 
@@ -113,6 +149,7 @@ $done-text: #468847;
 .nav.nav-list > li.active:hover > a {
   background-color: #08c;
 }
+
 
 .list {
   cursor: pointer;
@@ -153,4 +190,34 @@ $done-text: #468847;
       content: "→ ";
     }
   }
+}
+
+.wide-modal{
+  width: 700px;
+  margin-left: -350px;
+
+// Close icon
+.close { margin-top: 2px; margin-right: 5px }
+
+  .modal-header {
+    padding: 9px 15px;
+    border-bottom: 1px solid #eee;
+
+  }     
+  
+  .modal-right-side{
+    padding: 15px;
+
+    .btn {
+      text-align: left;
+      width: 115px;
+      margin-top: 3px;
+      margin-bottom: 3px;
+    }
+  }
+}
+
+.grey-sub-header {
+    margin-top: -15px;
+    color: gray;
 }
