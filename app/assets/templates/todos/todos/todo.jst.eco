@@ -2,7 +2,7 @@
   <input type="checkbox" class="todo-check" <%= "checked" if @todo.get('done')%> />
   <div class="todo-content">
     <span class="todo-label"><%= @todo.get('text') %></span>
-    <input type="text" class="todo-input" value="<%= @todo.escape('text') %>" />
+    <input type="text" class="todo-input" value="<%= @todo.get('text') %>" />
   </div>
   <a class="todo-destroy close" title="<%= if @todo.get('done') then "Clear" else "Delete" %>"><%- if @todo.get('done') then "&#x2713;" else "&#x2717;" %></a>
 </div>
