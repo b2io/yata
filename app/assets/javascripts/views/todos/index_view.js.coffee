@@ -19,3 +19,5 @@ class Yata.Views.Todos.Index extends Backbone.View
   handle_info_modal_requested: (todo) =>
     infoModalView = new Yata.Views.Todos.Modal.InfoModal(model: todo);
     @$('#info-modal').html(infoModalView.render())
+    console.log(@$('#info-modal'))
+    console.log(infoModalView)

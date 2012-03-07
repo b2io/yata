@@ -124,12 +124,19 @@ $done-text: #468847;
 
   }
 
+  .desc-label
+  {
+    word-wrap: break-word;
+  }
+
   &.editing {
     .desc-label { display: none; }
 
     .description-input {
       display: inline;
-      width: 100%;
+      max-width: 425px;
+      min-width: 425px;
+      height: 100%;
     }
   }
 
@@ -203,6 +210,10 @@ $done-text: #468847;
     padding: 9px 15px;
     border-bottom: 1px solid #eee;
 
+    .todo-name {
+       word-wrap: break-word;
+    }
+
   }     
   
   .modal-right-side{
@@ -210,7 +221,7 @@ $done-text: #468847;
 
     .btn {
       text-align: left;
-      width: 115px;
+      width: 125px;
       margin-top: 3px;
       margin-bottom: 3px;
     }
@@ -220,4 +231,8 @@ $done-text: #468847;
 .grey-sub-header {
     margin-top: -15px;
     color: gray;
+}
+
+#checklist-placeholder {
+    margin-top: 10px;
 }

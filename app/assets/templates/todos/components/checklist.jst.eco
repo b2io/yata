@@ -1,0 +1,9 @@
+<div>
+    <h4> <i class="icon-th-list"/> Checklist: </h4>
+    <div id='checklist'>
+        <ul id='checklist-list' class="unstyled">
+            <li><%=console.log(@checklist)%></li>
+        </ul>
+        <input type="text" value="Add Item"/>
+    </div>
+</div>

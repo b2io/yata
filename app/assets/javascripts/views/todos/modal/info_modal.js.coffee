@@ -8,11 +8,14 @@ class Yata.Views.Todos.Modal.InfoModal extends Backbone.View
   descriptionContent: null
   descriptionLabel: null
   modalBody: null
+  checkListPlaceholder: null
+  checklistButton: null
 
   initialize: ->
 
 
   render: =>
+
     # Render the overall template.
     @selectedList = Proxy.get('selectedList')
     @$el.html(@template(todo: @model, list: @selectedList))
@@ -20,6 +23,8 @@ class Yata.Views.Todos.Modal.InfoModal extends Backbone.View
     @modalBody = @$('.modal-body')
     @descriptionContent = @$('.description-content')
     @descriptionLabel = @$('.desc-label')
+    @checkListPlaceholder = @$('#checklist-placeholder')
+    @checklistButton = @$('.checklist-btn')
 
     #I had to manually bind these events
     #returning 'this' in render somehow borks the modal
@@ -27,6 +32,10 @@ class Yata.Views.Todos.Modal.InfoModal extends Backbone.View
     @$('.description-input').on('keypress', @onKeyPress)
     @$('.description-input').on('blur', @close)
     @$('.modal-body').on('dblclick', @editing)
+    @checklistButton.on('click', @addChecklist)
+
+    if (@model.checklist_items.length > 0)
+      @addChecklist()
 
    # TODO: render just the field that changes. not the whole modal
     @model.on('change', @reRender)
@@ -54,3 +63,20 @@ class Yata.Views.Todos.Modal.InfoModal extends Backbone.View
     console.log("editing")
     @descriptionContent.addClass('editing')
     @descriptionInput.focus()
+
+  addChecklist: =>
+    @checklistButton.off('click', @addChecklist)
+    @checklistButton.on('click', @removeChecklist)
+    @checklistButton.html("<i class='icon-check icon-white'/> Remove Checklist ")
+    checkList = new Yata.Views.Components.ChecklistView(model: @model);
+    @checkListPlaceholder.html(checkList.render().el)
+
+  removeChecklist: =>
+    console.log("remove checklist")
+    @checklistButton.off('click', @removeChecklist)
+    @checklistButton.on('click', @addChecklist)
+    @checklistButton.html("<i class='icon-check icon-white'/> Add Checklist ")
+   # @model.checklist_items.destroy()
+    @checkListPlaceholder.html("")
+
+

@@ -22,10 +22,13 @@
 //= require_tree ../templates/todos
 //= require models/todo_model
 //= require models/list_model
+//= require models/checklist_item_model
+//= require collections/checklist_items_collection
 //= require collections/todos_collection
 //= require collections/lists_collection
 //= require proxies/todos_proxy
 //= require views/todos/index_view
+//= require views/todos/components/checklist_view
 //= require views/todos/modal/info_modal
 //= require views/todos/todos/todos_view
 //= require views/todos/todos/todo_view
