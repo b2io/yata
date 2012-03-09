@@ -1,9 +1,19 @@
 <div>
     <h4> <i class="icon-th-list"/> Checklist: </h4>
     <div id='checklist'>
+        <h6><%=@completeItems%> / <%= @checklist.length %> items complete</h6>
+        <div class="progress" >
+            <div id="progress-bar" class="bar"></div>
+        </div>
         <ul id='checklist-list' class="unstyled">
-            <li><%=console.log(@checklist)%></li>
+            <% for item in @checklist:  %>
+               <li><%=item.get('text')%></li>
+            <% end %>
         </ul>
-        <input type="text" value="Add Item"/>
+        <div class="checklist-add" >
+          <input class="checklist-input hide" type="text" value=""/>
+          <label class="checklist-add-item" >Add Item</label>
+        </div>
+
     </div>
 </div>

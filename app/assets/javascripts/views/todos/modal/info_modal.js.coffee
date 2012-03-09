@@ -10,6 +10,7 @@ class Yata.Views.Todos.Modal.InfoModal extends Backbone.View
   modalBody: null
   checkListPlaceholder: null
   checklistButton: null
+  checklist: null
 
   initialize: ->
 
@@ -31,27 +32,29 @@ class Yata.Views.Todos.Modal.InfoModal extends Backbone.View
     #TODO: Get to the bottom of this and let backbone auto-bind events
     @$('.description-input').on('keypress', @onKeyPress)
     @$('.description-input').on('blur', @close)
-    @$('.modal-body').on('dblclick', @editing)
+    @$('.description-content').on('dblclick', @editing)
     @checklistButton.on('click', @addChecklist)
+
+    console.log(@model)
 
     if (@model.checklist_items.length > 0)
       @addChecklist()
-
    # TODO: render just the field that changes. not the whole modal
     @model.on('change', @reRender)
 
     @toggle()
+
+
 
   reRender: =>
     unless @model.get('description') == ""
       @descriptionLabel.html(@model.get('description'))
 
   toggle: ->
-    console.log("toggle")
+
     @$('#myModal').modal('show')
 
   close: =>
-    console.log("close")
     if @descriptionContent.hasClass('editing')
       @descriptionContent.removeClass('editing')
       @model.save(description: @descriptionInput.val()) if @descriptionInput.val() != @model.get('description')
@@ -60,7 +63,7 @@ class Yata.Views.Todos.Modal.InfoModal extends Backbone.View
     @close() if event.keyCode == 13
 
   editing: =>
-    console.log("editing")
+
     @descriptionContent.addClass('editing')
     @descriptionInput.focus()
 
@@ -68,15 +71,29 @@ class Yata.Views.Todos.Modal.InfoModal extends Backbone.View
     @checklistButton.off('click', @addChecklist)
     @checklistButton.on('click', @removeChecklist)
     @checklistButton.html("<i class='icon-check icon-white'/> Remove Checklist ")
-    checkList = new Yata.Views.Components.ChecklistView(model: @model);
-    @checkListPlaceholder.html(checkList.render().el)
+    @checkList = new Yata.Views.Components.ChecklistView(model: @model);
+    @checkListPlaceholder.html(@checkList.render().el)
 
   removeChecklist: =>
-    console.log("remove checklist")
     @checklistButton.off('click', @removeChecklist)
     @checklistButton.on('click', @addChecklist)
     @checklistButton.html("<i class='icon-check icon-white'/> Add Checklist ")
-   # @model.checklist_items.destroy()
+    console.log("before")
+    console.log(@model)
+    console.log("after")
+
+    for item in @model.checklist_items.models
+      do (item) ->
+        console.log(item)
+        item.destroy() unless item is undefined
+
+    @model.checklist_items.reset()
+    @model.save(checklist_items: [])
+
+    console.log(@model.get('checklist_items'))
+    console.log(@model.checklist_items.models.length)
+
+    #@model.save()
     @checkListPlaceholder.html("")
 
 

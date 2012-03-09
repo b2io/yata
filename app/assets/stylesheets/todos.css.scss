@@ -236,3 +236,12 @@ $done-text: #468847;
 #checklist-placeholder {
     margin-top: 10px;
 }
+
+.checklist-add{
+  .hide{
+     display: none;
+  }
+  .show{
+     display: inline;
+  }
+}

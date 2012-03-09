@@ -3,3 +3,5 @@ class Yata.Models.ChecklistItem extends Backbone.Model
     text: "Add Item"
     done: false
 
+  initialize: ->
+
