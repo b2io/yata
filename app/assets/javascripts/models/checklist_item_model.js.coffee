@@ -5,3 +5,6 @@ class Yata.Models.ChecklistItem extends Backbone.Model
 
   initialize: ->
 
+  toggle: =>
+    @save(done: !@get('done'))
+

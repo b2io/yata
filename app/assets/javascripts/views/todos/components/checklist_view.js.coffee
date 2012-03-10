@@ -10,15 +10,16 @@ class Yata.Views.Components.ChecklistView extends Backbone.View
   progressBar: null
 
   events:
-    'dblclick .checklist-add-item': 'handleAddItemDblClick'
+    'click .checklist-input' : 'handleChecklistInputClick'
     'blur .checklist-input' : "handleChecklistInput"
     'keypress .checklist-input' : "updateOnEnter"
+    'click .checklist-check' : "handleChecklistClick"
 
   initialize: ->
 
   render: =>
 
-    @model.on("change", @modelChanged)
+    @model.checklist_items.on('add', @modelChanged)
 
     @checklistItems = @model.checklist_items.models
 
@@ -37,28 +38,28 @@ class Yata.Views.Components.ChecklistView extends Backbone.View
 
     this
 
-
   updateProgress: (percentComplete) =>
     @$('.bar').attr('style', "width: #{percentComplete}%")
 
   modelChanged: =>
-    console.log('model changed')
     @render()
 
-  handleAddItemDblClick: =>
-    console.log('handleAddItemDoubleClick')
-    @$('.checklist-input').removeClass('hide')
-    @$('.checklist-add-item').addClass('hide')
-    @$('.checklist-input').focus()
-
   handleChecklistInput: =>
-    @$('.checklist-input').addClass('hide')
-    @$('.checklist-add-item').removeClass('hide')
-    console.log(@$('.checklist-input').val())
-    if (@$('.checklist-input').val() != "")
+    val = @$('.checklist-input').val()
+    if (val != "") && (val != "Add Item")
       @model.checklist_items.create(todo_id: @model.get('id'), text: @$('.checklist-input').val(), { wait: true })
-      @$('.checklist-input').val("")
+      @$('.checklist-input').val("Add Item")
+      @render()
+
+  handleChecklistInputClick: =>
+    @$('.checklist-input').val("")
+    @$('.checklist-input').focus()
 
 
   updateOnEnter: (event) =>
     @handleChecklistInput() if event.keyCode == 13
+
+  handleChecklistClick: (event) ->
+    currentCheckItem = @model.checklist_items.get((Number) event.currentTarget.id)
+    currentCheckItem.toggle()
+    @render()

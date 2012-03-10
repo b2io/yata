@@ -237,11 +237,15 @@ $done-text: #468847;
     margin-top: 10px;
 }
 
-.checklist-add{
-  .hide{
-     display: none;
+
+.checklist-line-item{
+
+  &.done {
+     text-decoration: line-through;
   }
-  .show{
-     display: inline;
-  }
+
+}
+
+.checklist-list {
+    margin-top: -5px;
 }
