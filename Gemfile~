@@ -18,7 +18,7 @@ group :test do
   gem 'capybara', "~> 1.1.1"
   gem 'database_cleaner'
   gem 'turn', :require => false
-  gem 'selenium-webdriver' 
+  gem 'selenium-webdriver', '~> 2.18.0'
   gem 'cucumber-rails', "~> 1.0.2"
   gem "factory_girl_rails"
   gem "bourne"

@@ -10,6 +10,11 @@ Yata::Application.routes.draw do
     resources :users
   end
 
+  if ["development", "test"].include? Rails.env
+    mount Jasminerice::Engine => "/jasmine"
+  end
+
+
   root to: "pages#index"
 
   match "/auth/:provider/callback" => "sessions#create"
