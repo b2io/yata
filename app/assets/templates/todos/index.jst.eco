@@ -1,2 +1,3 @@
+<div id='info-modal'></div>
 <div id="todos-container" class="span8"></div>
 <div id="lists-container" class="span4"></div>

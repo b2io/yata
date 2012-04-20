@@ -1,0 +1,19 @@
+<div>
+    <h4> <i class="icon-th-list"/> Checklist: </h4>
+    <div id='checklist'>
+        <h6><%=@completeItems%> / <%= @checklist.length %> items complete</h6>
+        <div class="progress" >
+            <div id="progress-bar" class="bar"></div>
+        </div>
+        <ul id='checklist-list' class="unstyled">
+            <% for item in @checklist:  %>
+
+               <li class="checklist-line-item <%= "done" if item.get('done')%>"><input type="checkbox" id="<%=item.get('id')%>" class="checklist-check" <%= "checked" if item.get('done')%> /> <%=item.get('text')%></li>
+            <% end %>
+        </ul>
+        <div class="checklist-add" >
+          <input class="checklist-input span6" type="text" value="Add Item"/>
+        </div>
+
+    </div>
+</div>

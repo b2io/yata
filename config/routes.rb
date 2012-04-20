@@ -8,6 +8,7 @@ Yata::Application.routes.draw do
     end
     resources :authorizations
     resources :users
+    resources :checklist_items
   end
 
   root to: "pages#index"

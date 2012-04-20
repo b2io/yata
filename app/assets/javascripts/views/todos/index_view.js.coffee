@@ -6,6 +6,7 @@ class Yata.Views.Todos.Index extends Backbone.View
   initialize: ->
     @todosView = new Yata.Views.Todos.Todos.TodosView()
     @listsView = new Yata.Views.Todos.Lists.ListsView()
+    window.Dispatcher.bind("info_modal_requested", this.handle_info_modal_requested)
 
   render: =>
     @$el.html(@template())
@@ -14,3 +15,9 @@ class Yata.Views.Todos.Index extends Backbone.View
     @$('#lists-container').html(@listsView.render().el)
 
     this
+
+  handle_info_modal_requested: (todo) =>
+    infoModalView = new Yata.Views.Todos.Modal.InfoModal(model: todo);
+    @$('#info-modal').html(infoModalView.render())
+    console.log(@$('#info-modal'))
+    console.log(infoModalView)
